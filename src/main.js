@@ -33,6 +33,17 @@ Vue.use(MdCard);
 Vue.use(MdRipple);
 Vue.use(MdField);
 
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyAyFcI9IDWtHdt2BKfkrZ_8f9aWliMEyt0",
+  authDomain: "bpb-admin.firebaseapp.com",
+  databaseURL: "https://bpb-admin.firebaseio.com",
+  projectId: "bpb-admin",
+  storageBucket: "bpb-admin.appspot.com",
+  messagingSenderId: "962430546613"
+};
+firebase.initializeApp(config);
+
 new Vue({
   router,
   store,
