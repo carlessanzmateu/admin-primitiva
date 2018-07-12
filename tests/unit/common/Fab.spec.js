@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { shallowMount } from '@vue/test-utils';
 import Fab from '@/common/Fab.vue';
 
-describe('ListCard', () => {
+describe('Fab', () => {
   let wrapper;
   const mockIcon = 'add';
 
@@ -14,7 +14,6 @@ describe('ListCard', () => {
 
   it('renders icon when passed', () => {
     const expectedIcon = 'add';
-    console.log(wrapper.text())
     expect(wrapper.text()).to.include(expectedIcon);
   });
 });

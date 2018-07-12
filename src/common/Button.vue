@@ -1,5 +1,5 @@
 <template>
-  <md-button class="md-raised button-custom-styles">{{ buttonText }}</md-button>
+  <md-button class="md-raised button-custom-styles" @click="isClicked">{{ buttonText }}</md-button>
 </template>
 
 <script>
@@ -11,5 +11,10 @@ export default {
       required: true,
     },
   },
+  methods: {
+    isClicked() {
+      this.$emit('button-clicked')
+    }
+  }
 };
 </script>
