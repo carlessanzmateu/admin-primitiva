@@ -11,22 +11,27 @@ import AuthService from '@/services/auth.service.js';
 
 import LoginCard from '@/views/login/components/LoginCard.vue';
 
-const authService = new AuthService();
-
 export default {
   name: 'Login',
   components: {
     LoginCard,
   },
+  data: () => ({
+    authService: undefined,
+    userInfo: undefined,
+  }),
   created() {
-    const user = authService.firebaseListener();
-    this.setAuthUser(user);
+    this.authService = new AuthService(firebase);
   },
   methods: {
     ...mapMutations('auth', ['setAuthUser']),
-    onSignIn() {
-      console.log('sign in is working');
+    async onSignIn(signInInfo) {
+      this.userInfo = await this.authService.signIn(signInInfo.user, signInInfo.password);
+      this.setAuthUser(this.userInfo);
     },
+    getAuthUserFromStore() {
+      return this.authUser;
+    }
   },
 };
 </script>

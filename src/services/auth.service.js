@@ -1,14 +1,21 @@
 export default class AuthService {
+  firebase;
+
+  constructor(firebase) {
+    this.firebase = firebase;
+  }
   firebaseListener() {
-    return firebase.auth().onAuthStateChanged(user => user);
+    console.log('listener');
+    return this.firebase.auth().onAuthStateChanged(user => user);
   }
   createUserWithEmail(email, password) {
-    firebase.auth().createUserWithEmailAndPassword(email,password);
+    this.firebase.auth().createUserWithEmailAndPassword(email,password);
   }
   signOut() {
-    firebase.auth().signOut();
+    this.firebase.auth().signOut();
   }
-  signIn(user, password) {
-    firebase.auth().signInWithEmailAndPassword(user, password);
+  async signIn(user, password) {
+    const userInfo = await this.firebase.auth().signInWithEmailAndPassword(user, password);
+    return userInfo;
   }
 }

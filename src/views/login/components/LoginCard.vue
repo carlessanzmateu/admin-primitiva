@@ -22,8 +22,8 @@ export default {
     LoginForm,
   },
   methods: {
-    onSignIn() {
-      this.$emit('sign-in');
+    onSignIn(signInInfo) {
+      this.$emit('sign-in', signInInfo);
     },
   },
 };

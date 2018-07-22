@@ -5,7 +5,7 @@ export default {
   },
   mutations: {
     setAuthUser(state, authUser) {
-      state.authUser = authUser;
+      state.authUser = authUser.user;
     },
   },
   actions: {},

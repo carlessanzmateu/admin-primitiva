@@ -2,7 +2,7 @@
   <div class="md-layout">
     <md-app md-mode="reveal">
       <md-app-toolbar class="md-primary">
-        <Toolbar @click-menu="toggleMenu"/>
+        <Toolbar @click-menu="toggleMenu" :userName="getAuthUserInfo"/>
       </md-app-toolbar>
 
       <md-app-drawer :md-active.sync="menuVisible">
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Toolbar from '@/common/Toolbar.vue';
 
 export default {
@@ -45,8 +46,15 @@ export default {
   components: {
     Toolbar,
   },
+  computed: {
+    ...mapState('auth', ['authUser']),
+    getAuthUserInfo() {
+      return this.authUser ? this.authUser.email : undefined;
+    },
+  },
   data: () => ({
     menuVisible: false,
+    userEmail: '',
   }),
   methods: {
     toggleMenu() {

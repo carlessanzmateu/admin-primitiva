@@ -25,7 +25,6 @@
 
   <md-card-actions>
     <Button buttonText="Entrar" @button-clicked="signIn" :disabled="isDisabled"></Button>
-    <Button buttonText="SignOut" @button-clicked="true"></Button>
   </md-card-actions>
 </section>
 </template>
@@ -57,7 +56,10 @@ export default {
     async signIn() {
       const isValid = await this.$validator.validate();
       if (isValid) {
-        this.$emit('sign-in');
+        this.$emit('sign-in', {
+          user: this.userValue,
+          password: this.passwordValue,
+        });
       } else {
         console.log('not valid sign in');
       }
