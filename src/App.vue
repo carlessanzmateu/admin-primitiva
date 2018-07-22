@@ -2,7 +2,7 @@
   <div class="md-layout">
     <md-app md-mode="reveal">
       <md-app-toolbar class="md-primary">
-        <Toolbar @click-menu="toggleMenu" :userName="hasAuthUser"/>
+        <Toolbar @click-menu="toggleMenu" :userName="getAuthUserEmail" :has-auth-user="hasAuthUser"/>
       </md-app-toolbar>
 
       <md-app-drawer :md-active.sync="menuVisible">
@@ -21,7 +21,7 @@
               <span class="md-list-item-text">Actos</span>
             </md-list-item>
           </router-link>
-          <md-list-item @click="signOut" v-if="hasAuthUser">
+          <md-list-item @click="signOut">
             <md-icon>power_settings_new</md-icon>
             <span class="md-list-item-text">Salir</span>
           </md-list-item>
@@ -55,7 +55,10 @@ export default {
   computed: {
     ...mapState('auth', ['authUser']),
     hasAuthUser() {
-      return this.authUser ? this.authUser.email : undefined;
+      return !!this.authUser;
+    },
+    getAuthUserEmail() {
+      return this.hasAuthUser ? this.authUser.email : undefined;
     },
   },
   data: () => ({
@@ -71,6 +74,7 @@ export default {
       await this.authService.signOut();
       this.removeAuthUser();
       this.toggleMenu();
+      this.$router.push('/login');
     }
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <md-button class="md-icon-button" @click="clickOnMenuButton">
+    <md-button class="md-icon-button" @click="clickOnMenuButton" v-if="hasAuthUser">
       <md-icon>menu</md-icon>
     </md-button>
     <span class="md-title">Banda Primitiva Benetússer</span>
@@ -13,7 +13,11 @@ export default {
   name: 'Toolbar',
   props: {
     userName: {
-      type: String
+      type: String,
+    },
+    hasAuthUser : {
+      type: Boolean,
+      required: true,
     }
   },
   methods: {

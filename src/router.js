@@ -13,6 +13,9 @@ export default new Router({
       path: '/',
       name: 'dashboard',
       component: Dashboard,
+      meta: {
+        auth: true
+      },
     },
     {
       path: '/login',
@@ -23,16 +26,25 @@ export default new Router({
       path: '/acts',
       name: 'acts',
       component: Acts,
+      meta: {
+        auth: true
+      },
     },
     {
       path: '/act/:id',
       name: 'act',
       component: Dashboard,
+      meta: {
+        auth: true
+      },
     },
     {
       path: '/about',
       name: 'about',
       component: About,
+      meta: {
+        auth: true
+      },
     },
   ],
 });

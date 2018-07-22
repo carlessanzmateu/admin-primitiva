@@ -17,6 +17,14 @@ import App from './App.vue';
 import router from './router';
 import store from '@/store/index.js';
 
+router.beforeEach((to, from, next) => {
+  const isLogged = store.state.auth.authUser !== null ? store.state.auth.authUser : false;
+  if(to.meta.auth && !isLogged) {
+    next({ path: '/login' });
+  } else {
+    next();
+  }
+});
 
 Vue.config.productionTip = false;
 Vue.use(VeeValidate);
