@@ -14,7 +14,7 @@ export default new Router({
       name: 'dashboard',
       component: Dashboard,
       meta: {
-        auth: true
+        auth: true,
       },
     },
     {
@@ -27,7 +27,7 @@ export default new Router({
       name: 'acts',
       component: Acts,
       meta: {
-        auth: true
+        auth: true,
       },
     },
     {
@@ -35,7 +35,7 @@ export default new Router({
       name: 'act',
       component: Dashboard,
       meta: {
-        auth: true
+        auth: true,
       },
     },
     {
@@ -43,7 +43,7 @@ export default new Router({
       name: 'about',
       component: About,
       meta: {
-        auth: true
+        auth: true,
       },
     },
   ],

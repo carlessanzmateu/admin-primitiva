@@ -9,7 +9,7 @@ export default {
     },
     removeAuthUser(state) {
       state.authUser = null;
-    }
+    },
   },
   actions: {},
 };

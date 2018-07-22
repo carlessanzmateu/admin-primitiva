@@ -28,6 +28,10 @@ export default {
     async onSignIn(signInInfo) {
       this.userInfo = await this.authService.signIn(signInInfo.user, signInInfo.password);
       this.setAuthUser(this.userInfo);
+
+      if(this.userInfo) {
+        this.$router.push('/');
+      }
     },
     getAuthUserFromStore() {
       return this.authUser;

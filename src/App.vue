@@ -2,7 +2,9 @@
   <div class="md-layout">
     <md-app md-mode="reveal">
       <md-app-toolbar class="md-primary">
-        <Toolbar @click-menu="toggleMenu" :userName="getAuthUserEmail" :has-auth-user="hasAuthUser"/>
+        <Toolbar @click-menu="toggleMenu"
+          :userName="getAuthUserEmail"
+          :has-auth-user="hasAuthUser"/>
       </md-app-toolbar>
 
       <md-app-drawer :md-active.sync="menuVisible">
@@ -40,7 +42,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 
-import AuthService from '@/services/auth.service.js';
+import AuthService from '@/services/auth.service';
 
 import Toolbar from '@/common/Toolbar.vue';
 
@@ -66,7 +68,7 @@ export default {
     userEmail: '',
   }),
   methods: {
-    ...mapMutations('auth',['removeAuthUser']),
+    ...mapMutations('auth', ['removeAuthUser']),
     toggleMenu() {
       this.menuVisible = !this.menuVisible;
     },
@@ -75,7 +77,7 @@ export default {
       this.removeAuthUser();
       this.toggleMenu();
       this.$router.push('/login');
-    }
+    },
   },
 };
 </script>

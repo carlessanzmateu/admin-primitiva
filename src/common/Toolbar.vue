@@ -15,15 +15,15 @@ export default {
     userName: {
       type: String,
     },
-    hasAuthUser : {
+    hasAuthUser: {
       type: Boolean,
       required: true,
-    }
+    },
   },
   methods: {
     clickOnMenuButton() {
       this.$emit('click-menu');
-    }
-  }
+    },
+  },
 };
 </script>
