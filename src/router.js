@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Dashboard from './views/Dashboard.vue';
-import Acts from './views/Acts.vue';
+import Acts from './views/acts/Acts.vue';
 import Login from './views/login/Login.vue';
 import About from './views/About.vue';
+import Musicians from './views/musicians/Musicians.vue';
 
 Vue.use(Router);
 
@@ -34,6 +35,14 @@ export default new Router({
       path: '/act/:id',
       name: 'act',
       component: Dashboard,
+      meta: {
+        auth: true,
+      },
+    },
+    {
+      path: '/musicians',
+      name: 'musicians',
+      component: Musicians,
       meta: {
         auth: true,
       },

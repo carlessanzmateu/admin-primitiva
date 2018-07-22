@@ -4,7 +4,8 @@
       <md-app-toolbar class="md-primary">
         <Toolbar @click-menu="toggleMenu"
           :userName="getAuthUserEmail"
-          :has-auth-user="hasAuthUser"/>
+          :has-auth-user="hasAuthUser"
+          @go-home="goHome"/>
       </md-app-toolbar>
 
       <md-app-drawer :md-active.sync="menuVisible">
@@ -15,6 +16,12 @@
             <md-list-item @click="toggleMenu">
               <md-icon>home</md-icon>
               <span class="md-list-item-text">Home</span>
+            </md-list-item>
+          </router-link>
+          <router-link to="/musicians">
+            <md-list-item @click="toggleMenu">
+              <md-icon>account_circle</md-icon>
+              <span class="md-list-item-text">Musicians</span>
             </md-list-item>
           </router-link>
           <router-link to="/acts">
@@ -71,6 +78,9 @@ export default {
     ...mapMutations('auth', ['removeAuthUser']),
     toggleMenu() {
       this.menuVisible = !this.menuVisible;
+    },
+    goHome() {
+      this.$router.push('/');
     },
     async signOut() {
       await this.authService.signOut();
