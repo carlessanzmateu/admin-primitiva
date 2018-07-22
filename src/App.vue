@@ -2,22 +2,29 @@
   <div class="md-layout">
     <md-app md-mode="reveal">
       <md-app-toolbar class="md-primary">
-        <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
-          <md-icon>menu</md-icon>
-        </md-button>
-        <span class="md-title">Banda Primitiva Benetússer</span>
+        <Toolbar @click-menu="toggleMenu"/>
       </md-app-toolbar>
 
       <md-app-drawer :md-active.sync="menuVisible">
         <md-toolbar class="md-transparent" md-elevation="0">Navigation</md-toolbar>
 
         <md-list>
+          <router-link to="/">
+            <md-list-item @click="toggleMenu">
+              <md-icon>home</md-icon>
+              <span class="md-list-item-text">Home</span>
+            </md-list-item>
+          </router-link>
           <router-link to="/acts">
-            <md-list-item>
+            <md-list-item @click="toggleMenu">
               <md-icon>near_me</md-icon>
               <span class="md-list-item-text">Actos</span>
             </md-list-item>
           </router-link>
+          <md-list-item @click="toggleMenu">
+            <md-icon>power_settings_new</md-icon>
+            <span class="md-list-item-text">Salir</span>
+          </md-list-item>
         </md-list>
       </md-app-drawer>
 
@@ -31,11 +38,21 @@
 </template>
 
 <script>
+import Toolbar from '@/common/Toolbar.vue';
+
 export default {
   name: 'Reveal',
+  components: {
+    Toolbar,
+  },
   data: () => ({
     menuVisible: false,
   }),
+  methods: {
+    toggleMenu() {
+      this.menuVisible = !this.menuVisible;
+    },
+  },
 };
 </script>
 

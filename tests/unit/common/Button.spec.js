@@ -17,10 +17,9 @@ describe('Button', () => {
     expect(wrapper.text()).to.include(expectedText);
   });
 
-  xit('emit button-clicked event when click the component', () => {
-    const button = wrapper.find('.button-custom-styles');
-    console.log(wrapper);
+  it('emit button-clicked event when click the component', () => {
+    const button = wrapper.find({ name: 'buttonWithText' });
     button.trigger('click');
-    // expect(wrapper.emitted('button-clicked')).to
+    expect(wrapper.emitted('button-clicked')).to.be.ok;
   });
 });

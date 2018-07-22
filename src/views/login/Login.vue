@@ -1,16 +1,32 @@
 <template>
   <div class="login">
-    <LoginCard/>
+    <LoginCard @sign-in="onSignIn"/>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
+import AuthService from '@/services/auth.service.js';
+
 import LoginCard from '@/views/login/components/LoginCard.vue';
+
+const authService = new AuthService();
 
 export default {
   name: 'Login',
   components: {
     LoginCard,
+  },
+  created() {
+    const user = authService.firebaseListener();
+    this.setAuthUser(user);
+  },
+  methods: {
+    ...mapMutations('auth', ['setAuthUser']),
+    onSignIn() {
+      console.log('sign in is working');
+    },
   },
 };
 </script>

@@ -25,10 +25,8 @@
 
   <md-card-actions>
     <Button buttonText="Entrar" @button-clicked="signIn" :disabled="isDisabled"></Button>
-    <Button buttonText="SignOut" @button-clicked="signOut"></Button>
+    <Button buttonText="SignOut" @button-clicked="true"></Button>
   </md-card-actions>
-
-  <span if="authUser">{{authUser.email}}</span>
 </section>
 </template>
 
@@ -42,40 +40,28 @@ export default {
     Card,
     Button,
   },
-  created () {
-    firebase.auth().onAuthStateChanged(user => {
-      this.authUser = user;
-    });
-  },
   data: () => ({
     userValue: undefined,
     passwordValue: undefined,
-    authUser: null
+    authUser: null,
   }),
   computed: {
     isDisabled() {
       return !(this.userValue && this.passwordValue);
     },
     hasEmail() {
-      console.log(this.authUser);
-      return this.authUser.email
-    }
+      return this.authUser.email;
+    },
   },
   methods: {
-    register () {
-      // firebase.auth().createUserWithEmailAndPassword('carlessanzmateu@gmail.com','1234567')
-    },
-    signOut() {
-      firebase.auth().signOut();
-    },
-    async signIn () {
+    async signIn() {
       const isValid = await this.$validator.validate();
-      if(!isValid) {
-        console.log('not valid');
-        return;
+      if (isValid) {
+        this.$emit('sign-in');
+      } else {
+        console.log('not valid sign in');
       }
-      firebase.auth().signInWithEmailAndPassword(this.userValue, this.passwordValue);
-    }
+    },
   },
 };
 

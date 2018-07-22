@@ -13,9 +13,8 @@ describe('Card', () => {
     });
   });
 
-  xit('should have slot', () => {
+  it('should have slot', () => {
     const renderedSlot = wrapper.find('.fake-slot-content');
-    console.log(renderedSlot);
-    expect(renderedSlot).to.not.be.undefined();
+    expect(renderedSlot).to.be.ok;
   });
 });

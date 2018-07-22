@@ -4,7 +4,7 @@
       <md-card-header>
         <div class="md-title">Login</div>
       </md-card-header>
-      <LoginForm/>
+      <LoginForm @sign-in="onSignIn"/>
     </Card>
   </div>
 </template>
@@ -20,6 +20,11 @@ export default {
     Card,
     Button,
     LoginForm,
+  },
+  methods: {
+    onSignIn() {
+      this.$emit('sign-in');
+    },
   },
 };
 </script>
