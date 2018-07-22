@@ -11,8 +11,8 @@ export default class AuthService {
   createUserWithEmail(email, password) {
     this.firebase.auth().createUserWithEmailAndPassword(email,password);
   }
-  signOut() {
-    this.firebase.auth().signOut();
+  async signOut() {
+    await this.firebase.auth().signOut();
   }
   async signIn(user, password) {
     const userInfo = await this.firebase.auth().signInWithEmailAndPassword(user, password);

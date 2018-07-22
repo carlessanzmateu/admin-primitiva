@@ -2,7 +2,7 @@
   <div class="md-layout">
     <md-app md-mode="reveal">
       <md-app-toolbar class="md-primary">
-        <Toolbar @click-menu="toggleMenu" :userName="getAuthUserInfo"/>
+        <Toolbar @click-menu="toggleMenu" :userName="hasAuthUser"/>
       </md-app-toolbar>
 
       <md-app-drawer :md-active.sync="menuVisible">
@@ -21,7 +21,7 @@
               <span class="md-list-item-text">Actos</span>
             </md-list-item>
           </router-link>
-          <md-list-item @click="toggleMenu">
+          <md-list-item @click="signOut" v-if="hasAuthUser">
             <md-icon>power_settings_new</md-icon>
             <span class="md-list-item-text">Salir</span>
           </md-list-item>
@@ -38,7 +38,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
+
+import AuthService from '@/services/auth.service.js';
+
 import Toolbar from '@/common/Toolbar.vue';
 
 export default {
@@ -46,9 +49,12 @@ export default {
   components: {
     Toolbar,
   },
+  created() {
+    this.authService = new AuthService(firebase);
+  },
   computed: {
     ...mapState('auth', ['authUser']),
-    getAuthUserInfo() {
+    hasAuthUser() {
       return this.authUser ? this.authUser.email : undefined;
     },
   },
@@ -57,9 +63,15 @@ export default {
     userEmail: '',
   }),
   methods: {
+    ...mapMutations('auth',['removeAuthUser']),
     toggleMenu() {
       this.menuVisible = !this.menuVisible;
     },
+    async signOut() {
+      await this.authService.signOut();
+      this.removeAuthUser();
+      this.toggleMenu();
+    }
   },
 };
 </script>
