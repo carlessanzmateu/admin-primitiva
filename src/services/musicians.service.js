@@ -6,17 +6,20 @@ export default class MusiciansService {
   }
   async getMusicians() {
     const musiciansRef = this.db.collection('musicos');
+    const musicians = [];
 
-    musiciansRef.get().then(querySnapshot => {
-      querySnapshot.forEach(doc) => {
-        console.log(doc.id, " => ", doc.data());
-      }
-    })
+    musiciansRef
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          musicians.push(doc.data());
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-    
-  });
-  
-  
+    return musicians;
   }
   getMusician() {
     const musiciansRef = this.db.collection('musicos').doc('carles-sanz');

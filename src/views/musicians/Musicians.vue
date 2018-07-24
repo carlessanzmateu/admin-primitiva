@@ -16,12 +16,19 @@ export default {
   },
   data: () => ({
     musiciansService: undefined,
+    musicians: undefined,
   }),
   created() {
     this.musiciansService = new MusiciansService(firebase);
   },
   mounted() {
-    this.musiciansService.getMusicians();
+    this.getMusicians();
+  },
+  methods: {
+    async getMusicians () {
+      this.musicians = await this.musiciansService.getMusicians();
+      console.log(this.musicians);
+    }
   }
 };
 </script>
