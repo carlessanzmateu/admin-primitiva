@@ -5,7 +5,6 @@ export default class AuthService {
     this.firebase = firebase;
   }
   firebaseListener() {
-    console.log('listener');
     return this.firebase.auth().onAuthStateChanged(user => user);
   }
   createUserWithEmail(email, password) {

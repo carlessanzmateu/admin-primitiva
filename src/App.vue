@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import firebase from 'firebase';
 import { mapState, mapMutations } from 'vuex';
 
 import AuthService from '@/services/auth.service';

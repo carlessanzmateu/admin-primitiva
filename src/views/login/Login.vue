@@ -5,9 +5,10 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import firebase from 'firebase';
+import { mapMutations, mapActions } from 'vuex';
 
-import AuthService from '@/services/auth.service.js';
+import AuthService from '@/services/auth.service';
 
 import LoginCard from '@/views/login/components/LoginCard.vue';
 
@@ -24,11 +25,10 @@ export default {
     this.authService = new AuthService(firebase);
   },
   methods: {
-    ...mapMutations('auth', ['setAuthUser']),
+    ...mapActions('auth', ['setAuthUser']),
     async onSignIn(signInInfo) {
       this.userInfo = await this.authService.signIn(signInInfo.user, signInInfo.password);
       this.setAuthUser(this.userInfo);
-
       if(this.userInfo) {
         this.$router.push('/');
       }

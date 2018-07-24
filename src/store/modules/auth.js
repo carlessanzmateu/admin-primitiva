@@ -5,11 +5,15 @@ export default {
   },
   mutations: {
     setAuthUser(state, authUser) {
-      state.authUser = authUser.user;
+      state.authUser = authUser;
     },
     removeAuthUser(state) {
       state.authUser = null;
     },
   },
-  actions: {},
+  actions: {
+    setAuthUser(context, authUser) {
+      context.commit('setAuthUser', authUser);
+    },
+  },
 };

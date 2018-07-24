@@ -1,5 +1,8 @@
 import 'vue-material/dist/vue-material.min.css';
 import Vue from 'vue';
+import store from '@/store/index';
+import firebase from 'firebase';
+import 'firebase/firestore';
 import {
   MdApp,
   MdToolbar,
@@ -15,11 +18,11 @@ import {
 import VeeValidate from 'vee-validate';
 import App from './App.vue';
 import router from './router';
-import store from '@/store/index.js';
+
 
 router.beforeEach((to, from, next) => {
   const isLogged = store.state.auth.authUser !== null ? store.state.auth.authUser : false;
-  if(to.meta.auth && !isLogged) {
+  if (to.meta.auth && !isLogged) {
     next({ path: '/login' });
   } else {
     next();
@@ -50,6 +53,7 @@ const config = {
   storageBucket: 'bpb-admin.appspot.com',
   messagingSenderId: '962430546613',
 };
+
 firebase.initializeApp(config);
 
 new Vue({

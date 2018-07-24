@@ -5,12 +5,23 @@
 </template>
 
 <script>
+import firebase from 'firebase';
 import MusiciansList from '@/views/musicians/components/MusiciansList.vue';
+import MusiciansService from '@/services/musicians.service';
 
 export default {
   name: 'Musicians',
   components: {
     MusiciansList
   },
+  data: () => ({
+    musiciansService: undefined,
+  }),
+  created() {
+    this.musiciansService = new MusiciansService(firebase);
+  },
+  mounted() {
+    this.musiciansService.getMusicians();
+  }
 };
 </script>
