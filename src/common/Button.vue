@@ -13,8 +13,8 @@ export default {
   },
   methods: {
     isClicked() {
-      this.$emit('button-clicked')
-    }
-  }
+      this.$emit('button-clicked');
+    },
+  },
 };
 </script>

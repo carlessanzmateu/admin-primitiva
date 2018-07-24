@@ -26,7 +26,7 @@ export default {
     },
     goHome() {
       this.$emit('go-home');
-    }
+    },
   },
 };
 </script>

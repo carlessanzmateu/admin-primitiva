@@ -8,7 +8,7 @@ export default class AuthService {
     return this.firebase.auth().onAuthStateChanged(user => user);
   }
   createUserWithEmail(email, password) {
-    this.firebase.auth().createUserWithEmailAndPassword(email,password);
+    this.firebase.auth().createUserWithEmailAndPassword(email, password);
   }
   async signOut() {
     await this.firebase.auth().signOut();

@@ -6,6 +6,7 @@ export default {
   mutations: {
     setAuthUser(state, authUser) {
       state.authUser = authUser;
+      console.log(authUser);
     },
     removeAuthUser(state) {
       state.authUser = null;
