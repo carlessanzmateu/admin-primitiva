@@ -1,6 +1,6 @@
 <template>
   <div class="musicians">
-    <MusiciansList/>
+    <MusiciansList v-if="musicians" :musicians-list="musicians"/>
   </div>
 </template>
 
@@ -26,7 +26,6 @@ export default {
   methods: {
     async getMusicians() {
       this.musicians = await this.musiciansService.getMusicians();
-      console.log(this.musicians);
     },
   },
 };

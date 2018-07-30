@@ -9,8 +9,17 @@ import ListCard from '@/common/ListCard.vue';
 
 export default {
   name: 'Musicians',
+  props: {
+    musiciansList: {
+      type: Array,
+      required: true,
+    }
+  },
   components: {
     ListCard,
+  },
+  created() {
+    console.log(this.musiciansList);
   },
   data: () => ({
     musicians: [
