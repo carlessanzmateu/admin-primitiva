@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import firebase from 'firebase/app';
 import { mapMutations, mapActions } from 'vuex';
 
 import AuthService from '@/services/auth.service';
@@ -22,7 +21,7 @@ export default {
     userInfo: undefined,
   }),
   created() {
-    this.authService = new AuthService(firebase);
+    this.authService = new AuthService();
   },
   methods: {
     ...mapActions('auth', ['setAuthUser']),

@@ -1,8 +1,16 @@
+import firebase from 'firebase/app';
+
 export default class MusiciansService {
   db;
 
-  constructor(firebase) {
-    this.db = firebase.firestore();
+  constructor() {
+    const firestore = firebase.firestore();
+    const settings = {
+      timestampsInSnapshots: true
+    };
+    firestore.settings(settings);
+
+    this.db = firestore;
   }
   async getMusicians() {
     const musiciansRef = this.db.collection('musicos');

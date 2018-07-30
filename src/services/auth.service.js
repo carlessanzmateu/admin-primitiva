@@ -1,7 +1,9 @@
+import firebase from 'firebase/app';
+
 export default class AuthService {
   firebase;
 
-  constructor(firebase) {
+  constructor() {
     this.firebase = firebase;
   }
   firebaseListener() {

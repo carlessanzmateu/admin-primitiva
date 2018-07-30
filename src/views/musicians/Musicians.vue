@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import firebase from 'firebase/firebase';
 import MusiciansList from '@/views/musicians/components/MusiciansList.vue';
 import MusiciansService from '@/services/musicians.service';
 
@@ -19,8 +18,7 @@ export default {
     musicians: undefined,
   }),
   created() {
-    console.log(firebase);
-    this.musiciansService = new MusiciansService(firebase);
+    this.musiciansService = new MusiciansService();
   },
   mounted() {
     this.getMusicians();
