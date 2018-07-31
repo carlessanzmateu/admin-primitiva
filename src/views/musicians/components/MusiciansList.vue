@@ -19,29 +19,10 @@ export default {
     ListCard,
   },
   created() {
-    console.log(this.musiciansList);
+    this.musicians = this.musiciansList
   },
   data: () => ({
-    musicians: [
-      {
-        id: 1,
-        title: 'Carles Sanz Mateu',
-        subtitle: 'Trombón',
-        description: '',
-      },
-      {
-        id: 2,
-        title: 'Victor López Tato',
-        subtitle: 'Tuba',
-        description: '',
-      },
-      {
-        id: 3,
-        title: 'Álex Sanz Mateu',
-        subtitle: 'Saxofón',
-        description: 'Alto y Tenor',
-      },
-    ],
-  })
+    musicians: [],
+  }),
 };
 </script>
