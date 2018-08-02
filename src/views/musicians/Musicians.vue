@@ -1,6 +1,6 @@
 <template>
   <div class="musicians">
-    <MusiciansList v-if="assembledMusicians" :musicians-list="assembledMusicians"/>
+    <MusiciansList v-if="musicians" :musicians-list="musicians"/>
   </div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
   data: () => ({
     musiciansService: undefined,
     musiciansFromService: undefined,
-    assembledMusicians: undefined,
+    musicians: undefined,
   }),
   created() {
     this.musiciansService = new MusiciansService();
@@ -29,7 +29,7 @@ export default {
   methods: {
     async getMusicians() {
       this.musiciansFromService = await this.musiciansService.getMusicians();
-      this.assembledMusicians = MusiciansAssembler.assembler(this.musiciansFromService);
+      this.musicians = MusiciansAssembler.assembler(this.musiciansFromService);
     },
   },
 };

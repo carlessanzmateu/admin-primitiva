@@ -49,7 +49,7 @@ export default new Router({
       },
     },
     {
-      path: '/musician/:name/:firstSurname/:secondSurname',
+      path: '/musician/:alias',
       name: 'musician',
       component: Musician,
       meta: {

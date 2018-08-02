@@ -1,10 +1,17 @@
 <template>
   <div class="musicians-list">
-    <ListCard v-for="(musician, key) in musiciansList" :key="key" :info="musician"/>
+    <router-link 
+      v-if="musiciansList"
+      v-for="(musician, key) in musiciansList" 
+      :key="key"
+      :to="getURl(musician.raw)">
+      <ListCard :info="musician.assembled"/>
+    </router-link>
   </div>
 </template>
 
 <script>
+import MusiciansAssembler from '@/assemblers/musicians.assembler';
 import ListCard from '@/common/ListCard.vue';
 
 export default {
@@ -18,11 +25,13 @@ export default {
   components: {
     ListCard,
   },
-  created() {
-    this.musicians = this.musiciansList;
-  },
   data: () => ({
     musicians: [],
   }),
+  methods: {
+    getURl(musician) {
+      return `/musician/${MusiciansAssembler.musicianAliasBuilder(musician)}`;
+    }
+  }
 };
 </script>

@@ -21,7 +21,7 @@
           <router-link to="/musicians">
             <md-list-item @click="toggleMenu">
               <md-icon>account_circle</md-icon>
-              <span class="md-list-item-text">Musicians</span>
+              <span class="md-list-item-text">Músicos</span>
             </md-list-item>
           </router-link>
           <router-link to="/acts">

@@ -28,11 +28,7 @@ export default {
   data: () => ({
     musiciansService: undefined,
     musicianFromService: undefined,
-    routeInfo: {
-      name: undefined,
-      firstSurname: undefined,
-      secondSurname: undefined,
-    },
+    routeInfo: undefined,
   }),
   computed: {
     createMusicianName() {
@@ -43,16 +39,11 @@ export default {
     },
   },
   created() {
-    this.musicianInfoFromRoute();
+    this.routeInfo = this.$route.params.alias;
     this.musiciansService = new MusiciansService();
     this.getMusician();
   },
   methods: {
-    musicianInfoFromRoute() {
-      this.routeInfo.name = this.$route.params.name;
-      this.routeInfo.firstSurname = this.$route.params.firstSurname;
-      this.routeInfo.secondSurname = this.$route.params.secondSurname;
-    },
     async getMusician() {
       this.musicianFromService = await this.musiciansService.getMusician(this.routeInfo);
     },

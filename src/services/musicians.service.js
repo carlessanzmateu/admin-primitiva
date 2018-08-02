@@ -27,10 +27,10 @@ export default class MusiciansService {
     return musicians;
   }
 
-  async getMusician(musicianInfo) {
-    this.musicianInfo = musicianInfo;
+  async getMusician(alias) {
+    this.alias = alias;
     let musician = undefined;
-    const musicianRef = this.db.collection('musicos').where('name','==',this.musicianInfo.name);
+    const musicianRef = this.db.collection('musicos').where('alias','==',this.alias);
     try {
     const querySnapshot = await musicianRef.get();
     querySnapshot.forEach((doc) => {
@@ -41,16 +41,5 @@ export default class MusiciansService {
     }
 
     return musician;
-    // const musiciansRef = this.db.collection('musicos').doc('carles-sanz');
-
-    // musiciansRef.get().then((doc) => {
-    //   if (doc.exists) {
-    //     console.log('Document data:', doc.data());
-    //   } else {
-    //     console.log('no hay documento');
-    //   }
-    // }).catch((error) => {
-    //   console.log('Error getting document:', error);
-    // });
   }
 }
