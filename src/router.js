@@ -5,6 +5,7 @@ import Acts from './views/acts/Acts.vue';
 import Login from './views/login/Login.vue';
 import About from './views/About.vue';
 import Musicians from './views/musicians/Musicians.vue';
+import Musician from './views/musician/Musician.vue';
 
 Vue.use(Router);
 
@@ -43,6 +44,14 @@ export default new Router({
       path: '/musicians',
       name: 'musicians',
       component: Musicians,
+      meta: {
+        auth: true,
+      },
+    },
+    {
+      path: '/musician/:name/:firstSurname/:secondSurname',
+      name: 'musician',
+      component: Musician,
       meta: {
         auth: true,
       },

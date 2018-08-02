@@ -15,7 +15,6 @@ export default class MusiciansService {
   async getMusicians() {
     const musiciansRef = this.db.collection('musicos');
     const musicians = [];
-    
     try {
       const querySnapshot = await musiciansRef.get();
       querySnapshot.forEach((doc) => {
@@ -27,17 +26,20 @@ export default class MusiciansService {
 
     return musicians;
   }
-  getMusician() {
-    const musiciansRef = this.db.collection('musicos').doc('carles-sanz');
 
-    musiciansRef.get().then((doc) => {
-      if (doc.exists) {
-        console.log('Document data:', doc.data());
-      } else {
-        console.log('no hay documento');
-      }
-    }).catch((error) => {
-      console.log('Error getting document:', error);
-    });
+  async getMusician(musicianInfo) {
+    this.musicianInfo = musicianInfo;
+    console.log(this.musicianInfo);
+    // const musiciansRef = this.db.collection('musicos').doc('carles-sanz');
+
+    // musiciansRef.get().then((doc) => {
+    //   if (doc.exists) {
+    //     console.log('Document data:', doc.data());
+    //   } else {
+    //     console.log('no hay documento');
+    //   }
+    // }).catch((error) => {
+    //   console.log('Error getting document:', error);
+    // });
   }
 }

@@ -28,8 +28,8 @@ export default {
   },
   methods: {
     async getMusicians() {
-      this.musicians = await this.musiciansService.getMusicians();
-      this.assembledMusicians = MusiciansAssembler.assembler(this.musicians);
+      this.musiciansFromService = await this.musiciansService.getMusicians();
+      this.assembledMusicians = MusiciansAssembler.assembler(this.musiciansFromService);
     },
   },
 };
