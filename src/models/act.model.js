@@ -1,6 +1,7 @@
 export default class Acts {
   id;
   name;
+  actType;
   description;
   expectedMusicians;
   assistantMusicians;
