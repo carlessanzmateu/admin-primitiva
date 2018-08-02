@@ -1,11 +1,10 @@
 <template>
   <div class="musicians">
-    <!-- <MusiciansList v-if="musicians" :musicians-list="musicians"/> -->
+    <MusiciansList v-if="assembledMusicians" :musicians-list="assembledMusicians"/>
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
 import MusiciansList from '@/views/musicians/components/MusiciansList.vue';
 import MusiciansService from '@/services/musicians.service';
 
@@ -18,7 +17,8 @@ export default {
   },
   data: () => ({
     musiciansService: undefined,
-    musicians: undefined,
+    musiciansFromService: undefined,
+    assembledMusicians: undefined,
   }),
   created() {
     this.musiciansService = new MusiciansService();
@@ -29,7 +29,7 @@ export default {
   methods: {
     async getMusicians() {
       this.musicians = await this.musiciansService.getMusicians();
-      MusiciansAssembler.assembler(this.musicians);
+      this.assembledMusicians = MusiciansAssembler.assembler(this.musicians);
     },
   },
 };

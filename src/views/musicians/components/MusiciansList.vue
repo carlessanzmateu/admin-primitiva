@@ -1,6 +1,6 @@
 <template>
   <div class="musicians-list">
-    <ListCard v-for="(musician, key, index) in musicians" :key="key" :info="musicianListAssembler(musician)"/>
+    <ListCard v-for="(musician, key) in musiciansList" :key="key" :info="musician"/>
   </div>
 </template>
 
@@ -13,39 +13,16 @@ export default {
     musiciansList: {
       type: Array,
       required: true,
-    }
+    },
   },
   components: {
     ListCard,
   },
   created() {
     this.musicians = this.musiciansList;
-    console.log(this.musicians);
   },
   data: () => ({
     musicians: [],
   }),
-  methods: {
-    musicianListAssembler(musician) {
-    return {
-      title: `${musician.name} ${musician['first-surname']} ${musician['second-surname']}`,
-      subtitle: '',
-      description: this.instrumentsToString(musician.instrument),
-    }
-    },
-    instrumentsToString(instruments) {
-      let instrumentsAsString = '';
-
-      instruments.forEach((instrument, index) => {
-        if (index === 0) {
-          instrumentsAsString += `${instrument.id}`;
-          } else {
-            instrumentsAsString += ` ${instrument.id}`;
-        }
-      });
-
-      return instrumentsAsString;
-    }
-  }
 };
 </script>
