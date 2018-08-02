@@ -29,7 +29,18 @@ export default class MusiciansService {
 
   async getMusician(musicianInfo) {
     this.musicianInfo = musicianInfo;
-    console.log(this.musicianInfo);
+    let musician = undefined;
+    const musicianRef = this.db.collection('musicos').where('name','==',this.musicianInfo.name);
+    try {
+    const querySnapshot = await musicianRef.get();
+    querySnapshot.forEach((doc) => {
+      musician = doc.data();
+    });
+    } catch (error) {
+      console.log(error);
+    }
+
+    return musician;
     // const musiciansRef = this.db.collection('musicos').doc('carles-sanz');
 
     // musiciansRef.get().then((doc) => {
