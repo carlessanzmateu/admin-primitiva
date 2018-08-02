@@ -15,17 +15,15 @@ export default class MusiciansService {
   async getMusicians() {
     const musiciansRef = this.db.collection('musicos');
     const musicians = [];
-
-    musiciansRef
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          musicians.push(doc.data());
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+    
+    try {
+      const querySnapshot = await musiciansRef.get();
+      querySnapshot.forEach((doc) => {
+        musicians.push(doc.data());
       });
+    } catch (error) {
+      console.log(error);
+    }
 
     return musicians;
   }
