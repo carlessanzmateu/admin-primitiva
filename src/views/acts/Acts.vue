@@ -6,7 +6,9 @@
         :subtitle="new Date(act.date.seconds).toString()"
         :description="act.description"/>
     </router-link>
-    <Button buttonText="Añadir Acto"></Button>
+    <router-link to="/create/act">
+      <Button buttonText="Añadir Acto"></Button>
+    </router-link>
   </div>
 </template>
 
