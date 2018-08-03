@@ -21,11 +21,11 @@ export default class ActsService {
     try {
       const actDoc = await actRef.get();
 
-      if (actDoc.exists) {
-        return actDoc.data();
-      } else {
+      if (!actDoc.exists) {
         console.log(`${this.docId} does not exist`);
       }
+
+      return actDoc.data();
 
     } catch (error) {
       console.log(error);

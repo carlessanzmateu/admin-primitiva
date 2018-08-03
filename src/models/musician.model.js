@@ -1,6 +1,7 @@
 export default class Musician {
-  name
-  firstSurname
-  secondSurname
-  instruments
+  docId;
+  name;
+  firstSurname;
+  secondSurname;
+  instruments;
 }

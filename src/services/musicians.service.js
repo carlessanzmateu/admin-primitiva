@@ -18,7 +18,11 @@ export default class MusiciansService {
     try {
       const querySnapshot = await musiciansRef.get();
       querySnapshot.forEach((doc) => {
-        musicians.push(doc.data());
+        const dataFromdoc = doc.data();
+        const docId = {
+          docId: doc.id,
+        };
+        musicians.push(Object.assign(docId, dataFromdoc));
       });
     } catch (error) {
       console.log(error);
@@ -27,19 +31,22 @@ export default class MusiciansService {
     return musicians;
   }
 
-  async getMusician(alias) {
-    this.alias = alias;
-    let musician = undefined;
-    const musicianRef = this.db.collection('musicos').where('alias','==',this.alias);
+  async getMusician(docId) {
+    this.docId = docId;
+
+    const musicianRef = this.db.collection('musicos').doc(this.docId);
+
     try {
-    const querySnapshot = await musicianRef.get();
-    querySnapshot.forEach((doc) => {
-      musician = doc.data();
-    });
+      const musicianDoc = await musicianRef.get();
+
+      if (!musicianDoc.exists) {
+        console.log(`${this.docId} does not exists`);
+      }
+
+      return musicianDoc.data();
+
     } catch (error) {
       console.log(error);
     }
-
-    return musician;
   }
 }

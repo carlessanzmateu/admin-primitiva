@@ -29,7 +29,7 @@ export default {
   methods: {
     async getMusicians() {
       this.musiciansFromService = await this.musiciansService.getMusicians();
-      this.musicians = MusiciansAssembler.assembler(this.musiciansFromService);
+      this.musicians = MusiciansAssembler.assemblerList(this.musiciansFromService);
     },
   },
 };
