@@ -3,12 +3,12 @@
     <md-card md-with-hover>
       <md-ripple>
         <md-card-header>
-          <div class="md-title">{{ info.title }}</div>
-          <div class="md-subhead">{{ info.subtitle }}</div>
+          <div class="md-title">{{ title }}</div>
+          <div class="md-subhead">{{ subtitle }}</div>
         </md-card-header>
 
         <md-card-content>
-          {{ info.description }}
+          {{ description }}
         </md-card-content>
       </md-ripple>
     </md-card>
@@ -19,19 +19,15 @@
 export default {
   name: 'ListCard',
   props: {
-    info: {
-      title: {
-        type: String,
-        required: true,
-      },
-      subtitle: {
-        type: String,
-        required: false,
-      },
-      description: {
-        type: String,
-        required: false,
-      },
+    title: {
+      type: String,
+      required: true,
+    },
+    subtitle: {
+      type: String,
+    },
+    description: {
+      type: String,
     },
   },
 };

@@ -1,7 +1,10 @@
 <template>
   <div class="home">
-    <router-link :to="routerDestination(act.id)" v-for="(act, key) in foo" :key="key">
-      <ListCard :info="act"/>
+    <router-link :to="routerDestination(act.id)" v-for="(act, key) in acts" :key="key">
+      <ListCard 
+        :title="act.name"
+        :subtitle="new Date(act.date.seconds).toString()"
+        :description="act.description"/>
     </router-link>
     <Button buttonText="Añadir Acto"></Button>
   </div>
@@ -9,6 +12,8 @@
 
 <script>
 import ActsService from '@/services/acts.service';
+
+import ActsAssembler from '@/assemblers/acts.assembler';
 
 import ListCard from '@/common/ListCard.vue';
 import Button from '@/common/Button.vue';
@@ -21,27 +26,7 @@ export default {
   },
   data: () => ({
     actsService: undefined,
-    actsFromService: undefined,
-    foo: [
-      {
-        id: 1,
-        title: 'fallas 2018',
-        subtitle: new Date(),
-        description: 'Recogida de falleras',
-      },
-      {
-        id: 2,
-        title: 'semana santa 2018',
-        subtitle: new Date(),
-        description: 'Recogida de clavariesas',
-      },
-      {
-        id: 3,
-        title: 'fiestas 2018',
-        subtitle: new Date(),
-        description: 'Recogida de festeras',
-      },
-    ],
+    acts: undefined,
   }),
   created() {
     this.actsService = new ActsService();
@@ -54,8 +39,8 @@ export default {
       return `/act/${actId}`;
     },
     async getActs() {
-      this.actsFromService = await this.actsService.getAllActs();
-      console.log(this.actsFromService);
+      const actsFromService = await this.actsService.getAllActs();
+      this.acts = ActsAssembler.assemblerList(actsFromService);
     },
   },
 };
