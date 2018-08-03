@@ -3,7 +3,6 @@
     <md-app md-mode="reveal">
       <md-app-toolbar class="md-primary">
         <Toolbar @click-menu="toggleMenu"
-          :userName="getAuthUserEmail"
           :has-auth-user="hasAuthUser"
           @go-home="goHome"/>
       </md-app-toolbar>
@@ -12,6 +11,11 @@
         <md-toolbar class="md-transparent" md-elevation="0">Navigation</md-toolbar>
 
         <md-list>
+          <router-link to="/">
+            <md-list-item @click="toggleMenu">
+              <span class="md-list-item-text">{{ getAuthUserEmail }}</span>
+            </md-list-item>
+          </router-link>
           <router-link to="/">
             <md-list-item @click="toggleMenu">
               <md-icon>home</md-icon>

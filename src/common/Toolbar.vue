@@ -4,7 +4,6 @@
       <md-icon>menu</md-icon>
     </md-button>
     <span class="md-title site-name" @click="goHome">Banda Primitiva Benetússer</span>
-    <span class="md-title" v-if="userName"> - {{ userName }}</span>
   </section>
 </template>
 
@@ -12,9 +11,6 @@
 export default {
   name: 'Toolbar',
   props: {
-    userName: {
-      type: String,
-    },
     hasAuthUser: {
       type: Boolean,
       required: true,

@@ -5,13 +5,13 @@ export default class MusiciansAssembler {
     musicians.forEach((musician) => {
       assembledMusicians.push({
         raw: {
-          ...musician
+          ...musician,
         },
         assembled: {
           title: `${musician.name} ${musician.firstSurname} ${musician.secondSurname}`,
           subtitle: '',
           description: this.instrumentsToString(musician.instruments),
-        }
+        },
       });
     });
 
@@ -33,14 +33,12 @@ export default class MusiciansAssembler {
   }
 
   static musicianAliasBuilder(musicianInfo) {
-    let name = musicianInfo.name;
-    let firstSurname = musicianInfo.firstSurname;
-    let secondSurname = musicianInfo.secondSurname;
+    let { name, firstSurname, secondSurname } = musicianInfo;
 
-    name = name.normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\s/g,'');
-    firstSurname = firstSurname.normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\s/g,'');
-    secondSurname = secondSurname.normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\s/g,'');
+    name = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s/g, '');
+    firstSurname = firstSurname.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s/g, '');
+    secondSurname = secondSurname.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s/g, '');
 
-    return name+firstSurname+secondSurname;
+    return name + firstSurname + secondSurname;
   }
 }
