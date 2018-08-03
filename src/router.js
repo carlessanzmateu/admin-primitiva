@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Dashboard from './views/Dashboard.vue';
 import Acts from './views/acts/Acts.vue';
+import Act from './views/act/Act.vue';
 import Login from './views/login/Login.vue';
 import About from './views/About.vue';
 import Musicians from './views/musicians/Musicians.vue';
@@ -35,7 +36,7 @@ export default new Router({
     {
       path: '/act/:id',
       name: 'act',
-      component: Dashboard,
+      component: Act,
       meta: {
         auth: true,
       },

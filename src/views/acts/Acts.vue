@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
-    <router-link :to="routerDestination(act.id)" v-for="(act, key) in acts" :key="key">
-      <ListCard 
+  <div class="acts">
+    <router-link :to="routerDestination(act.docId)" v-for="(act, key) in acts" :key="key">
+      <ListCard
         :title="act.name"
         :subtitle="new Date(act.date.seconds).toString()"
         :description="act.description"/>

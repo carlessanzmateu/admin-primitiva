@@ -1,5 +1,6 @@
 export default class Acts {
   id;
+  docId;
   name;
   actType;
   description;
