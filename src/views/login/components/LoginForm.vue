@@ -30,13 +30,11 @@
 </template>
 
 <script>
-import Card from '@/common/Card.vue';
 import Button from '@/common/Button.vue';
 
 export default {
   name: 'LoginCard',
   components: {
-    Card,
     Button,
   },
   data: () => ({

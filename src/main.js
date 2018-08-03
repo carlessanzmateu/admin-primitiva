@@ -14,6 +14,7 @@ import {
   MdCard,
   MdRipple,
   MdField,
+  MdMenu,
 } from 'vue-material/dist/components';
 import VeeValidate from 'vee-validate';
 import App from './App.vue';
@@ -43,6 +44,7 @@ Vue.use(MdContent);
 Vue.use(MdCard);
 Vue.use(MdRipple);
 Vue.use(MdField);
+Vue.use(MdMenu);
 
 // Initialize Firebase
 const config = {
