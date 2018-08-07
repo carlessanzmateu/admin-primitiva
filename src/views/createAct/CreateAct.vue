@@ -4,16 +4,19 @@
     <CreateActForm
       v-if="hasNecessaryInfo"
       :act-types="actTypes"
-      :clothes="clothes"/>
+      :clothes="clothes"
+      :musicians="musicians"/>
   </div>
 </template>
 
 <script>
 import ActTypeService from '@/services/actType.service';
 import ClothesService from '@/services/clothes.service';
+import MusiciansService from '@/services/musicians.service';
 
 import ActTypeAssembler from '@/assemblers/actTypes.assembler';
 import ClothesAssembler from '@/assemblers/clothes.assembler';
+import MusiciansAssembler from '@/assemblers/musicians.assembler';
 
 import CreateActForm from '@/views/createAct/components/CreateActForm.vue';
 
@@ -29,19 +32,24 @@ export default {
     clothesService: undefined,
     clothesFromService: undefined,
     clothes: undefined,
+    musiciansService: undefined,
+    musiciansFromService: undefined,
+    musicians: undefined,
   }),
   computed: {
     hasNecessaryInfo() {
-      return !!this.actTypes && !!this.clothes;
+      return !!this.actTypes && !!this.clothes && !!this.musicians;
     },
   },
   created() {
     this.actTypesService = new ActTypeService();
     this.clothesService = new ClothesService();
+    this.musiciansService = new MusiciansService();
   },
   mounted() {
     this.getActTypes();
     this.getAllClothes();
+    this.getAllMusicians();
   },
   methods: {
     async getActTypes() {
@@ -52,6 +60,10 @@ export default {
       this.clothesFromService = await this.clothesService.getAllClothes();
       this.clothes = ClothesAssembler.assemblerList(this.clothesFromService);
     },
+    async getAllMusicians() {
+      this.musiciansFromService = await this.musiciansService.getMusicians();
+      this.musicians = MusiciansAssembler.assemblerList(this.musiciansFromService);
+    }
   },
 };
 </script>

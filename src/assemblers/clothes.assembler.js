@@ -16,7 +16,6 @@ export default class ClothesAssembler {
 
       assembledClothes.push(assembledElementClothes);
     });
-
     return assembledClothes;
   }
 

@@ -4,8 +4,8 @@ export default class Acts {
   name;//
   actType;//
   description;//
-  expectedMusicians;
-  assistantMusicians;
+  expectedMusicians;//
+  assistantMusicians;//
   instrumentPerMusicians;
   expenses;//
   income;//

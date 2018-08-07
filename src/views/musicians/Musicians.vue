@@ -5,10 +5,11 @@
 </template>
 
 <script>
-import MusiciansList from '@/views/musicians/components/MusiciansList.vue';
 import MusiciansService from '@/services/musicians.service';
 
 import MusiciansAssembler from '@/assemblers/musicians.assembler';
+
+import MusiciansList from '@/views/musicians/components/MusiciansList.vue';
 
 export default {
   name: 'Musicians',

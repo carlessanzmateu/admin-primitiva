@@ -55,6 +55,21 @@
         </md-select>
       </md-field>
       <md-datepicker v-model="actDayDate" md-immediately />
+      <div class="expected-musicians">
+        <List
+          :list-options="musicians"
+          title="Músicos esperados"
+          property-with-info="name"
+          @selection="expectedMusiciansHandler"/>
+      </div>
+      <div class="assistant-musicians" v-if="expectedMusicians">
+        <List
+          :list-options="expectedMusicians"
+          title="Músicos asistentes confirmados"
+          property-with-info="name"
+          @selection="assistantMusiciansHandler"/>
+      </div>
+      <div class="reinforcements"></div>
     </div>
   </form>
   <Button buttonText="Crear acto" @button-clicked="signIn" :disabled="isDisabled"></Button>
@@ -63,11 +78,13 @@
 
 <script>
 import Button from '@/common/Button.vue';
+import List from '@/common/List.vue';
 
 export default {
   name: 'CreateActForm',
   components: {
     Button,
+    List,
   },
   props: {
     actTypes: {
@@ -78,6 +95,10 @@ export default {
       type: Array,
       required: true,
     },
+    musicians: {
+      type: Array,
+      required: true,
+    }
   },
   data: () => ({
     actName: undefined,
@@ -88,6 +109,8 @@ export default {
     actType: undefined,
     clothesElement: undefined,
     actDayDate: undefined,
+    expectedMusicians: undefined,
+    assistantMusicians: undefined,
   }),
   computed: {
     isDisabled() {
@@ -105,6 +128,12 @@ export default {
       } else {
         console.log('not valid sign in');
       }
+    },
+    expectedMusiciansHandler(expectedMusicians) {
+      this.expectedMusicians = expectedMusicians;
+    },
+    assistantMusiciansHandler(assistantMusicians) {
+      this.assistantMusicians = assistantMusicians;
     },
   },
 };
