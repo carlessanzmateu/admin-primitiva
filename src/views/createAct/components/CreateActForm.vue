@@ -69,7 +69,13 @@
           property-with-info="name"
           @selection="assistantMusiciansHandler"/>
       </div>
-      <div class="reinforcements"></div>
+      <div class="reinforcements">
+        <List
+          :list-options="reinforcements"
+          title="Refuerzos"
+          property-with-info="name"
+          @selection="assistantMusiciansHandler"/>
+      </div>
     </div>
   </form>
   <Button buttonText="Crear acto" @button-clicked="signIn" :disabled="isDisabled"></Button>
@@ -98,6 +104,10 @@ export default {
     musicians: {
       type: Array,
       required: true,
+    },
+    reinforcements: {
+      type: Array,
+      required: true,
     }
   },
   data: () => ({
@@ -111,6 +121,7 @@ export default {
     actDayDate: undefined,
     expectedMusicians: undefined,
     assistantMusicians: undefined,
+    confirmedReinforcements: undefined,
   }),
   computed: {
     isDisabled() {
@@ -134,6 +145,9 @@ export default {
     },
     assistantMusiciansHandler(assistantMusicians) {
       this.assistantMusicians = assistantMusicians;
+    },
+    reinforcementsHandler(reinforcements) {
+      this.confirmedReinforcements = reinforcements;
     },
   },
 };

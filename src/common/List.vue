@@ -1,7 +1,7 @@
 <template>
   <section class="list">
     <h3 v-if="title">{{ title }}</h3>
-    <h6 v-if="availableItems.length">Disponibles</h6>
+    <h6 v-if="availableItems.length">Disponibles para añadir</h6>
     <ul class="available-items">
       <li
         v-for="(availableItem, index) in availableItems"
@@ -15,7 +15,7 @@
           </span>
         </li>
     </ul>
-    <h6 v-if="selectedItems.length">Seleccionados</h6>
+    <h6 v-if="selectedItems.length">Añadidos</h6>
     <ul class="selected-items">
       <li
         v-for="(selectedItem, index) in selectedItems"
@@ -23,7 +23,7 @@
         class="selected-item">
           {{ selectedItem[propertyWithInfo] }}
           <span
-            class="add-button"
+            class="remove-button"
             @click="removeSelectedItem(index)">
             <md-icon>clear</md-icon>
           </span>
@@ -78,6 +78,19 @@ export default {
 .selected-item {
   display: flex;
   justify-content: space-between;
+}
+
+.available-item:hover,
+.selected-item:hover {
+  background-color: #e6e6e6;
+}
+
+.add-button:hover {
+  color: rgb(41, 206, 41);
+}
+
+.remove-button:hover {
+  color: rgb(255, 27, 27);
 }
 </style>
 

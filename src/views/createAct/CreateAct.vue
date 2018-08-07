@@ -5,7 +5,8 @@
       v-if="hasNecessaryInfo"
       :act-types="actTypes"
       :clothes="clothes"
-      :musicians="musicians"/>
+      :musicians="musicians"
+      :reinforcements="instruments"/>
   </div>
 </template>
 
@@ -73,7 +74,7 @@ export default {
     },
     async getAllInstruments() {
       this.instrumentsFromService = await this.instrumentsService.getAllInstruments();
-      this.instruments = InstrumentsAssembler.assemblerList();
+      this.instruments = InstrumentsAssembler.assemblerList(this.instrumentsFromService );
     }
   },
 };

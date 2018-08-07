@@ -11,6 +11,6 @@ export default class Acts {
   income;//
   date;//
   location;//
-  reinforcements;
+  reinforcements;//
   clothes;//
 }
