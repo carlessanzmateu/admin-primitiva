@@ -37,14 +37,24 @@
                   type="number"/>
       </md-field>
       <md-field>
-          <label for="actTypeName">Tipo de acto</label>
-          <md-select v-model="actType" name="actTypeName" id="actTypeName">
-            <md-option
-            v-for="(actType, key) in actTypes"
-            :key="key"
-            :value="actType.id">{{ actType.name }}</md-option>
-          </md-select>
-        </md-field>
+        <label for="actTypeName">Tipo de acto</label>
+        <md-select v-model="actType" name="actTypeName" id="actTypeName">
+          <md-option
+          v-for="(actType, key) in actTypes"
+          :key="key"
+          :value="actType.id">{{ actType.name }}</md-option>
+        </md-select>
+      </md-field>
+      <md-field>
+        <label for="actTypeName">Ropa</label>
+        <md-select v-model="clothesElement" name="clothes" id="clothesName">
+          <md-option
+          v-for="(clothesElement, key) in clothes"
+          :key="key"
+          :value="clothesElement.id">{{ clothesElement.alias }}</md-option>
+        </md-select>
+      </md-field>
+      <md-datepicker v-model="actDayDate" md-immediately />
     </div>
   </form>
   <Button buttonText="Crear acto" @button-clicked="signIn" :disabled="isDisabled"></Button>
@@ -63,7 +73,11 @@ export default {
     actTypes: {
       type: Array,
       required: true,
-    }
+    },
+    clothes: {
+      type: Array,
+      required: true,
+    },
   },
   data: () => ({
     actName: undefined,
@@ -72,6 +86,8 @@ export default {
     actIncome: undefined,
     actExpenses: undefined,
     actType: undefined,
+    clothesElement: undefined,
+    actDayDate: undefined,
   }),
   computed: {
     isDisabled() {

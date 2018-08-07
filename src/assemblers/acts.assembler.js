@@ -21,8 +21,6 @@ export default class ActsAssembler {
       assembledAct.income = act.income ? act.income : undefined;
       assembledAct.date = act.date ? act.date : undefined;
       assembledAct.location = act.location ? act.location : undefined;
-      assembledAct.startHour = act.startHour ? act.startHour : undefined;
-      assembledAct.finishHour = act.finishHour ? act.finishHour : undefined;
       assembledAct.reinforcements = act.reinforcements ? act.reinforcements : undefined;
       assembledAct.clothes = act.clothes ? act.clothes : undefined;
 

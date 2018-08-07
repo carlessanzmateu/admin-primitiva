@@ -5,10 +5,6 @@
     <p>{{ act.description }}</p>
     <h3>Fecha</h3>
     <p>{{ act.date.seconds }}</p>
-    <h3>Hora de inicio</h3>
-    <p>{{ act.startHour.seconds }}</p>
-    <h3>Hora de finalización</h3>
-    <p>{{ act.finishHour.seconds }}</p>
     <h3>Lugar</h3>
     <p>{{ act.location }}</p>
     <h3>Ropa</h3>

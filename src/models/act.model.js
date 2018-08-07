@@ -2,17 +2,15 @@ export default class Acts {
   id;
   docId;
   name;//
-  actType;
+  actType;//
   description;//
   expectedMusicians;
   assistantMusicians;
   instrumentPerMusicians;
   expenses;//
   income;//
-  date;
+  date;//
   location;//
-  startHour;
-  finishHour;
   reinforcements;
-  clothes;
+  clothes;//
 }
