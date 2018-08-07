@@ -13,40 +13,40 @@ export default class InstrumentsService {
     this.db = firestore;
   }
 
-  async getClothes(docId) {
+  async getInstrument(docId) {
     this.docId = docId;
 
-    const clothesRef = this.db.collection('ropa').doc(this.docId);
+    const instrumentsRef = this.db.collection('instrumentos').doc(this.docId);
 
     try {
-      const clothesDoc = await clothesRef.get();
+      const instrumentsDoc = await instrumentsRef.get();
 
-      if (!clothesDoc.exists) {
+      if (!instrumentsDoc.exists) {
         console.log(`${this.docId} does not exist`);
       }
 
-      return clothesDoc.data();
+      return instrumentsDoc.data();
 
     } catch (error) {
       console.log(error);
     }
   }
-  async getAllClothes() {
-    const clothesRef = this.db.collection('ropa');
-    const clothes = [];
+  async getAllInstruments() {
+    const instrumentsRef = this.db.collection('instrumentos');
+    const instruments = [];
     try {
-      const querySnapshot = await clothesRef.get();
+      const querySnapshot = await instrumentsRef.get();
       querySnapshot.forEach((doc) => {
         const dataFromdoc = doc.data();
         const docId = {
           docId: doc.id,
         };
-        clothes.push(Object.assign(docId, dataFromdoc));
+        instruments.push(Object.assign(docId, dataFromdoc));
       });
     } catch (error) {
       console.log(error);
     }
 
-    return clothes;
+    return instruments;
   }
 }
