@@ -38,15 +38,19 @@ export default {
   props: {
     listOptions: {
       type: Array,
-      required: true
+      required: true,
     },
     propertyWithInfo: {
       type: String,
       required: true,
     },
     title: {
-      type: String
-    }
+      type: String,
+    },
+    canDuplicate: {
+      type: Boolean,
+      default: true,
+    },
   },
   created() {
     this.availableItems = this.listOptions;
@@ -58,13 +62,17 @@ export default {
   methods: {
     selectAvailableItem(indexSelection) {
       this.selectedItems.push(this.availableItems[indexSelection]);
-      this.availableItems.splice(indexSelection, 1);
+      if (!this.canDuplicate) {
+        this.availableItems.splice(indexSelection, 1);
+      }
       this.$emit('selection', this.selectedItems);
     },
     removeSelectedItem(indexSelection) {
       this.availableItems.push(this.selectedItems[indexSelection]);
-      this.selectedItems.splice(indexSelection, 1);
-      this.$emit('selection',this.selectedItems);
+      if (!this.canDuplicate) {
+        this.selectedItems.splice(indexSelection, 1);
+      }
+      this.$emit('selection', this.selectedItems);
     },
   },
 };

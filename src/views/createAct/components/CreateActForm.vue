@@ -58,17 +58,21 @@
       <div class="expected-musicians">
         <List
           :list-options="musicians"
+          :can-duplicate="false"
           title="Músicos esperados"
           property-with-info="name"
           @selection="expectedMusiciansHandler"/>
       </div>
-      <div class="assistant-musicians" v-if="expectedMusicians">
+
+      <!-- Esto solo debería verse en la vista de editar -->
+      <!-- No puedes confirmar la asistencia de algo que aún no está siendo -->
+      <!-- <div class="assistant-musicians" v-if="expectedMusicians">
         <List
           :list-options="expectedMusicians"
           title="Músicos asistentes confirmados"
           property-with-info="name"
           @selection="assistantMusiciansHandler"/>
-      </div>
+      </div> -->
       <div class="reinforcements">
         <List
           :list-options="reinforcements"
@@ -108,7 +112,7 @@ export default {
     reinforcements: {
       type: Array,
       required: true,
-    }
+    },
   },
   data: () => ({
     actName: undefined,
