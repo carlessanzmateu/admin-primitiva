@@ -6,7 +6,8 @@
       :act-types="actTypes"
       :clothes="clothes"
       :musicians="musicians"
-      :reinforcements="instruments"/>
+      :reinforcements="instruments"
+      @create-act-submit="createActHandler"/>
   </div>
 </template>
 
@@ -75,6 +76,9 @@ export default {
     async getAllInstruments() {
       this.instrumentsFromService = await this.instrumentsService.getAllInstruments();
       this.instruments = InstrumentsAssembler.assemblerList(this.instrumentsFromService );
+    },
+    createActHandler(actInfo) {
+      console.log(actInfo);
     }
   },
 };

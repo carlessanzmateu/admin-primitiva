@@ -38,7 +38,7 @@
       </md-field>
       <md-field>
         <label for="actTypeName">Tipo de acto</label>
-        <md-select v-model="actType" name="actTypeName" id="actTypeName">
+        <md-select v-model="actTypeId" name="actTypeName" id="actTypeName">
           <md-option
           v-for="(actType, key) in actTypes"
           :key="key"
@@ -82,7 +82,7 @@
       </div>
     </div>
   </form>
-  <Button buttonText="Crear acto" @button-clicked="signIn" :disabled="isDisabled"></Button>
+  <Button buttonText="Crear acto" @button-clicked="createActSubmit" :disabled="isDisabled"></Button>
 </section>
 </template>
 
@@ -120,28 +120,42 @@ export default {
     actLocation: undefined,
     actIncome: undefined,
     actExpenses: undefined,
-    actType: undefined,
+    actTypeId: undefined,
     clothesElement: undefined,
     actDayDate: undefined,
     expectedMusicians: undefined,
-    assistantMusicians: undefined,
+    // assistantMusicians: undefined,
     confirmedReinforcements: undefined,
   }),
   computed: {
     isDisabled() {
-      return !(this.userValue && this.passwordValue);
+      return !(this.actName 
+        && this.actDescription 
+        && this.actLocation 
+        && this.actTypeId
+        && this.clothesElement
+        && this.actDayDate);
     },
   },
   methods: {
-    async signIn() {
+    async createActSubmit() {
       const isValid = await this.$validator.validate();
       if (isValid) {
-        this.$emit('sign-in', {
-          user: this.userValue,
-          password: this.passwordValue,
-        });
+        const actInfo = {
+          name: this.actName,
+          description: this.actDescription,
+          location: this.actLocation,
+          income: this.actIncome,
+          expenses: this.actExpenses,
+          actType: this.actTypes.find((actType) => actType.id === this.actTypeId ),
+          clothes: this.clothesElement,
+          date: this.actDayDate,
+          expectedMusicians: this.expectedMusicians,
+          reinforcements: this.confirmedReinforcements,
+        };
+        this.$emit('create-act-submit', actInfo);
       } else {
-        console.log('not valid sign in');
+        console.log('not valid act');
       }
     },
     expectedMusiciansHandler(expectedMusicians) {
