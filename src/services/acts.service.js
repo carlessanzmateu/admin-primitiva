@@ -50,7 +50,16 @@ export default class ActsService {
     return acts;
   }
   async getPaginatedActs() {}
-  async createAct() {}
+  async createAct(act) {
+    const payload = Object.assign({}, act);
+    console.log(payload);
+    try {
+      await this.db.collection('actos').add(payload);
+      console.log('Act written successfully');
+    } catch (error) {
+      console.log('Error creating act', error);
+    }
+  }
   async updateAct() {}
   async removeAct() {}
 }

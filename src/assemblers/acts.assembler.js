@@ -1,4 +1,6 @@
-import Act from '@/models/act.model';
+import { Act } from '@/models/act.model';
+import { ActRequest } from '@/models/act.model';
+import FirestoreUtils from '@/utils/firestore.util';
 
 export default class ActsAssembler {
   static assemblerList(acts) {
@@ -7,9 +9,8 @@ export default class ActsAssembler {
       return [new Act()];
     }
 
-    acts.forEach(act => {
+    acts.forEach((act) => {
       const assembledAct = new Act();
-      assembledAct.id = act.id ? act.id : undefined;
       assembledAct.docId = act.docId ? act.docId : undefined;
       assembledAct.name = act.name ? act.name : undefined;
       assembledAct.actType = act.actType ? act.actType : undefined;
@@ -53,5 +54,29 @@ export default class ActsAssembler {
     assembledAct.clothes = act.clothes ? act.clothes : undefined;
 
     return assembledAct;
+  }
+
+  static actRequestAssember(act) {
+    if (!act) {
+      return;
+    }
+
+    const firestoreUtils = new FirestoreUtils();
+    const actRequest = new ActRequest();
+
+    actRequest.name = act.name ? act.name : undefined;
+    actRequest.actType = act.actType ? firestoreUtils.singleDocumentReferenceBuilder('actos', act.actType) : undefined;
+    actRequest.description = act.description ? act.description : '';
+    actRequest.expectedMusicians = act.expectedMusicians ? firestoreUtils.multipleDocumentReferenceBuilder('actos', act.expectedMusicians) : [];
+    actRequest.expenses = act.expenses ? act.expenses : undefined;
+    actRequest.income = act.income ? act.income : undefined;
+    actRequest.date = act.date ? act.date : undefined;
+    actRequest.location = act.location ? act.location : undefined;
+    actRequest.reinforcements = act.reinforcements ? firestoreUtils.multipleDocumentReferenceBuilder('actos', act.reinforcements) : undefined;
+    actRequest.clothes = act.clothes ? firestoreUtils.singleDocumentReferenceBuilder('actos', act.clothes) : undefined;
+    actRequest.assistantMusicians = act.assistantMusicians ? act.assistantMusicians : [];
+    actRequest.instrumentPerMusicians = act.instrumentPerMusicians ? act.instrumentPerMusicians : [];
+
+    return actRequest;
   }
 }
