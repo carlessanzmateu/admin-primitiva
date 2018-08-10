@@ -47,7 +47,7 @@
       </md-field>
       <md-field>
         <label for="actTypeName">Ropa</label>
-        <md-select v-model="clothesElement" name="clothes" id="clothesName">
+        <md-select v-model="clothesElementId" name="clothes" id="clothesName">
           <md-option
           v-for="(clothesElement, key) in clothes"
           :key="key"
@@ -78,7 +78,7 @@
           :list-options="reinforcements"
           title="Refuerzos"
           property-with-info="name"
-          @selection="assistantMusiciansHandler"/>
+          @selection="reinforcementsHandler"/>
       </div>
     </div>
   </form>
@@ -121,7 +121,7 @@ export default {
     actIncome: undefined,
     actExpenses: undefined,
     actTypeId: undefined,
-    clothesElement: undefined,
+    clothesElementId: undefined,
     actDayDate: undefined,
     expectedMusicians: undefined,
     // assistantMusicians: undefined,
@@ -133,7 +133,7 @@ export default {
         && this.actDescription 
         && this.actLocation 
         && this.actTypeId
-        && this.clothesElement
+        && this.clothesElementId
         && this.actDayDate);
     },
   },
@@ -147,8 +147,8 @@ export default {
           location: this.actLocation,
           income: this.actIncome,
           expenses: this.actExpenses,
-          actType: this.actTypes.find((actType) => actType.id === this.actTypeId ),
-          clothes: this.clothesElement,
+          actType: this.actTypes.find((actType) => actType.id === this.actTypeId),
+          clothes: this.clothes.find((clothesElement) => clothesElement.id === this.clothesElementId),
           date: this.actDayDate,
           expectedMusicians: this.expectedMusicians,
           reinforcements: this.confirmedReinforcements,
