@@ -63,6 +63,22 @@
           property-with-info="name"
           @selection="expectedMusiciansHandler"/>
       </div>
+      <div class="musician-instrument-confirmation"
+        v-if="expectedMusiciansWithMultipleInstruments"
+        v-for="(expectedMusician, key) in expectedMusicians"
+        :key="key">
+        <h3 class="multiple-instruments-advise">Ups! Parece que {{ expectedMusician.name }} es capaz de tocar más de un instrumento</h3>
+        <h4 class="multiple-instruments-advise">*Por favor, confirma con que instrumento se espera que venga a tocar</h4>
+        <md-field>
+          <label for="expectedMusicianInstrument">Instrumentos</label>
+          <md-select v-model="foo" name="expectedMusicianInstrument" id="expectedMusicianInstrument">
+            <md-option
+            v-for="(instrument, key) in expectedMusician.instruments"
+            :key="key"
+            :value="instrument.id">{{ instrument.id }}</md-option>
+          </md-select>
+        </md-field>
+      </div>
 
       <!-- Esto solo debería verse en la vista de editar -->
       <!-- No puedes confirmar la asistencia de algo que aún no está siendo -->
@@ -126,6 +142,7 @@ export default {
     expectedMusicians: undefined,
     // assistantMusicians: undefined,
     confirmedReinforcements: undefined,
+    foo: undefined,
   }),
   computed: {
     isDisabled() {
@@ -136,6 +153,12 @@ export default {
         && this.clothesElementId
         && this.actDayDate);
     },
+    expectedMusiciansWithMultipleInstruments() {
+      console.log(this.expectedMusicians);
+      return this.expectedMusicians.find((expectedMusician) => {
+        return expectedMusician.instruments.length > 1;
+      });
+    }
   },
   methods: {
     async createActSubmit() {
@@ -175,5 +198,9 @@ export default {
 <style scoped lang="scss">
 .button-custom-styles {
   width: 100%;
+}
+
+.multiple-instruments-advise {
+  color: red;
 }
 </style>
