@@ -72,7 +72,8 @@ export default {
       return !!this.authUser;
     },
     getAuthUserEmail() {
-      return this.hasAuthUser ? this.authUser.email : undefined;
+      console.log(this.authUser);
+      return this.hasAuthUser ? this.authUser.user.email : undefined;
     },
   },
   data: () => ({
