@@ -72,7 +72,7 @@ export default class ActsAssembler {
     actRequest.income = act.income ? act.income : undefined;
     actRequest.date = act.date ? act.date : undefined;
     actRequest.location = act.location ? act.location : undefined;
-    actRequest.reinforcements = act.reinforcements ? firestoreUtils.multipleDocumentReferenceBuilder('actos', act.reinforcements) : undefined;
+    actRequest.reinforcements = act.reinforcements ? firestoreUtils.multipleDocumentReferenceBuilder('actos', act.reinforcements) : [];
     actRequest.clothes = act.clothes ? firestoreUtils.singleDocumentReferenceBuilder('actos', act.clothes) : undefined;
     actRequest.assistantMusicians = act.assistantMusicians ? act.assistantMusicians : [];
     actRequest.instrumentPerMusicians = act.instrumentPerMusicians ? act.instrumentPerMusicians : [];

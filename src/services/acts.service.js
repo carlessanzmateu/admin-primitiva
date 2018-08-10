@@ -52,13 +52,17 @@ export default class ActsService {
   async getPaginatedActs() {}
   async createAct(act) {
     const payload = Object.assign({}, act);
-    console.log(payload);
+    let actCreated = false;
     try {
       await this.db.collection('actos').add(payload);
       console.log('Act written successfully');
+      actCreated = true;
     } catch (error) {
+      actCreated = false;
       console.log('Error creating act', error);
     }
+
+    return actCreated;
   }
   async updateAct() {}
   async removeAct() {}

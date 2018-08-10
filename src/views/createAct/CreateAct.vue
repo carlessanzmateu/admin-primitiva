@@ -83,7 +83,10 @@ export default {
     },
     async createActHandler(actInfo) {
       const actRequest = ActAssembler.actRequestAssember(actInfo);
-      this.actsService.createAct(actRequest);
+      const actCreationConfirmation = await this.actsService.createAct(actRequest);
+      if (actCreationConfirmation) {
+        this.$router.push('/acts');
+      }
     },
   },
 };
