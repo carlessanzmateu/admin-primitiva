@@ -1,116 +1,73 @@
 <template>
 <section class="create-act-form">
   <form novalidate class="md-layout" @submit="e => e.preventDefault()">
-    <div class="md-layout-item md-small-size-100">
-      <md-field>
-        <label for="actName">Nombre del acto</label>
-        <md-input v-validate="'required'"
-                  :required="true"
-                  name="actName"
-                  v-model="actName"/>
-      </md-field>
-      <md-field>
-        <label>Descripción</label>
-        <md-textarea v-model="actDescription"></md-textarea>
-      </md-field>
-      <md-field>
-        <label for="actLocation">Lugar</label>
-        <md-input v-validate="'required'"
-                  :required="true"
-                  name="actLocation"
-                  v-model="actLocation"/>
-      </md-field>
-      <md-field>
-        <label for="actIncome">Beneficio</label>
-        <md-input v-validate="'required'"
-                  :required="true"
-                  name="actIncome"
-                  v-model="actIncome"
-                  type="number"/>
-      </md-field>
-      <md-field>
-        <label for="actExpenses">Gastos</label>
-        <md-input v-validate="'required'"
-                  :required="true"
-                  name="actExpenses"
-                  v-model="actExpenses"
-                  type="number"/>
-      </md-field>
-      <md-field>
-        <label for="actTypeName">Tipo de acto</label>
-        <md-select v-model="actTypeId" name="actTypeName" id="actTypeName">
-          <md-option
-          v-for="(actType, key) in actTypes"
-          :key="key"
-          :value="actType.id">{{ actType.name }}</md-option>
-        </md-select>
-      </md-field>
-      <md-field>
-        <label for="actTypeName">Ropa</label>
-        <md-select v-model="clothesElementId" name="clothes" id="clothesName">
-          <md-option
-          v-for="(clothesElement, key) in clothes"
-          :key="key"
-          :value="clothesElement.id">{{ clothesElement.alias }}</md-option>
-        </md-select>
-      </md-field>
-      <md-datepicker v-model="actDayDate" md-immediately />
-      <div class="expected-musicians">
-        <List
-          :list-options="musicians"
-          :can-duplicate="false"
-          title="Músicos esperados"
-          property-with-info="name"
-          @selection="expectedMusiciansHandler"/>
-      </div>
-      <div class="musician-instrument-confirmation"
-        v-if="expectedMusiciansWithMultipleInstruments"
-        v-for="(expectedMusician, key) in expectedMusicians"
-        :key="key">
-        <h3 class="multiple-instruments-advise">Ups! Parece que {{ expectedMusician.name }} es capaz de tocar más de un instrumento</h3>
-        <h4 class="multiple-instruments-advise">*Por favor, confirma con que instrumento se espera que venga a tocar</h4>
-        <md-field>
-          <label for="expectedMusicianInstrument">Instrumentos</label>
-          <md-select v-model="foo" name="expectedMusicianInstrument" id="expectedMusicianInstrument">
-            <md-option
-            v-for="(instrument, key) in expectedMusician.instruments"
-            :key="key"
-            :value="instrument.id">{{ instrument.id }}</md-option>
-          </md-select>
-        </md-field>
-      </div>
-
-      <!-- Esto solo debería verse en la vista de editar -->
-      <!-- No puedes confirmar la asistencia de algo que aún no está siendo -->
-      <!-- <div class="assistant-musicians" v-if="expectedMusicians">
-        <List
-          :list-options="expectedMusicians"
-          title="Músicos asistentes confirmados"
-          property-with-info="name"
-          @selection="assistantMusiciansHandler"/>
-      </div> -->
-      <div class="reinforcements">
-        <List
-          :list-options="reinforcements"
-          title="Refuerzos"
-          property-with-info="name"
-          @selection="reinforcementsHandler"/>
-      </div>
+    <div
+      v-if="wizard.stepOneIsVisible"
+      class="step-one-wrapper">
+      <ActCreationStepOne
+        :step-one-info="createActInfo"/>
+    </div>
+    <div
+      v-if="wizard.stepTwoIsVisible"
+      class="step-two-wrapper">
+      <ActCreationStepTwo
+        :step-two-info="createActInfo"/>
+    </div>
+    <div
+      v-if="wizard.stepThreeIsVisible"
+      class="step-three-wrapper">
+      <ActCreationStepThree
+        :act-types="actTypes"
+        :clothes="clothes"
+        :step-three-info="createActInfo"/>
+    </div>
+    <div
+      v-if="wizard.stepFourIsVisible"
+      class="step-four-wrapper">
+      <ActCreationStepFour
+        :musicians="musicians"
+        @expected-musicians-selection="expectedMusiciansHandler"/>
+    </div>
+    <div
+      v-if="wizard.stepFiveIsVisible" 
+      class="step-five-wrapper">
+      <ActCreationStepFive
+        :reinforcements="reinforcements"
+        @reinforcements-selection="reinforcementsHandler"/>
     </div>
   </form>
-  <Button buttonText="Crear acto" @button-clicked="createActSubmit" :disabled="isDisabled"></Button>
+  <BackNextConfirmButtons
+    back-text="Volver"
+    next-text="Continuar"
+    confirm-text="Crear acto"
+    :back-button-is-disabled="false"
+    :next-button-is-disabled="false"
+    :confirm-button-is-disabled="false"
+    :navigators-are-visible="true"
+    :confirm-is-visible="true"
+    @back-button="backButtonHandler"
+    @next-button="nextButtonHandler"
+    @confirm-button="confirmButtonHandler"/>
 </section>
 </template>
 
 <script>
-import Button from '@/common/Button.vue';
-import List from '@/common/List.vue';
+import ActCreationStepOne from '@/views/createAct/components/ActCreationStepOne.vue';
+import ActCreationStepTwo from '@/views/createAct/components/ActCreationStepTwo.vue';
+import ActCreationStepThree from '@/views/createAct/components/ActCreationStepThree.vue';
+import ActCreationStepFour from '@/views/createAct/components/ActCreationStepFour.vue';
+import ActCreationStepFive from '@/views/createAct/components/ActCreationStepFive.vue';
+import BackNextConfirmButtons from '@/common/BackNextConfirmButtons.vue';
 
 export default {
   name: 'CreateActForm',
   components: {
-    Button,
-    List,
+    ActCreationStepOne,
+    ActCreationStepTwo,
+    ActCreationStepThree,
+    ActCreationStepFour,
+    ActCreationStepFive,
+    BackNextConfirmButtons,
   },
   props: {
     actTypes: {
@@ -131,27 +88,34 @@ export default {
     },
   },
   data: () => ({
-    actName: undefined,
-    actDescription: undefined,
-    actLocation: undefined,
-    actIncome: undefined,
-    actExpenses: undefined,
-    actTypeId: undefined,
-    clothesElementId: undefined,
-    actDayDate: undefined,
-    expectedMusicians: undefined,
-    // assistantMusicians: undefined,
-    confirmedReinforcements: undefined,
-    foo: undefined,
+    createActInfo : {
+      name: undefined,
+      description: undefined,
+      location: undefined,
+      date: undefined,
+      income: undefined,
+      expenses: undefined,
+      actType: undefined,
+      expectedMusicians: undefined,
+      reinforcements: undefined,
+    },
+    wizard: {
+      stepOneIsVisible: true,
+      stepTwoIsVisible: false,
+      stepThreeIsVisible: false,
+      stepFourIsVisible: false,
+      stepFiveIsVisible: false,
+    }
   }),
   computed: {
     isDisabled() {
-      return !(this.actName 
-        && this.actDescription 
-        && this.actLocation 
-        && this.actTypeId
-        && this.clothesElementId
-        && this.actDayDate);
+      // return !(this.actName 
+      //   && this.actDescription 
+      //   && this.actLocation 
+      //   && this.actTypeId
+      //   && this.clothesElementId
+      //   && this.actDayDate);
+      return false;
     },
     expectedMusiciansWithMultipleInstruments() {
       console.log(this.expectedMusicians);
@@ -162,33 +126,40 @@ export default {
   },
   methods: {
     async createActSubmit() {
-      const isValid = await this.$validator.validate();
-      if (isValid) {
-        const actInfo = {
-          name: this.actName,
-          description: this.actDescription,
-          location: this.actLocation,
-          income: this.actIncome,
-          expenses: this.actExpenses,
-          actType: this.actTypes.find((actType) => actType.id === this.actTypeId),
-          clothes: this.clothes.find((clothesElement) => clothesElement.id === this.clothesElementId),
-          date: this.actDayDate,
-          expectedMusicians: this.expectedMusicians,
-          reinforcements: this.confirmedReinforcements,
-        };
-        this.$emit('create-act-submit', actInfo);
-      } else {
-        console.log('not valid act');
-      }
+      console.log(this.createActInfo);
+      // const isValid = await this.$validator.validate();
+      // if (isValid) {
+      //   const actInfo = {
+      //     name: this.actName,
+      //     description: this.actDescription,
+      //     location: this.actLocation,
+      //     income: this.actIncome,
+      //     expenses: this.actExpenses,
+      //     actType: this.actTypes.find((actType) => actType.id === this.actTypeId),
+      //     clothes: this.clothes.find((clothesElement) => clothesElement.id === this.clothesElementId),
+      //     date: this.actDayDate,
+      //     expectedMusicians: this.expectedMusicians,
+      //     reinforcements: this.confirmedReinforcements,
+      //   };
+      //   this.$emit('create-act-submit', actInfo);
+      // } else {
+      //   console.log('not valid act');
+      // }
     },
     expectedMusiciansHandler(expectedMusicians) {
-      this.expectedMusicians = expectedMusicians;
-    },
-    assistantMusiciansHandler(assistantMusicians) {
-      this.assistantMusicians = assistantMusicians;
+      this.createActInfo.expectedMusicians = expectedMusicians;
     },
     reinforcementsHandler(reinforcements) {
-      this.confirmedReinforcements = reinforcements;
+      this.createActInfo.reinforcements = reinforcements;
+    },
+    backButtonHandler() {
+      console.log('go back!');
+    },
+    nextButtonHandler() {
+      console.log('go next!');
+    },
+    confirmButtonHandler() {
+      console.log('confirm!');      
     },
   },
 };
@@ -196,6 +167,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.step-one-wrapper,
+.step-two-wrapper,
+.step-three-wrapper,
+.step-four-wrapper,
+.step-five-wrapper {
+  width: 100%;
+}
 .button-custom-styles {
   width: 100%;
 }
