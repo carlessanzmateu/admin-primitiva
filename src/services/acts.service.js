@@ -46,7 +46,7 @@ export default class ActsService {
     } catch (error) {
       console.log(error);
     }
-    console.log(acts);
+
     return acts;
   }
   async getPaginatedActs() {}
