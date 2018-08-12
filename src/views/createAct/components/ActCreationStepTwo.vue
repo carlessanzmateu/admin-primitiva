@@ -19,19 +19,47 @@
           v-model="stepTwoInfo.expenses"
           type="number"/>
       </md-field>
+      <BackNextConfirmButtons
+        back-text="Volver"
+        next-text="Continuar"
+        confirm-text="Crear acto"
+        :back-button-is-disabled="false"
+        :next-button-is-disabled="!canNavigateToNextStep"
+        :confirm-button-is-disabled="false"
+        :navigators-are-visible="true"
+        :confirm-is-visible="false"
+        @back-button="backButtonHandler"
+        @next-button="nextButtonHandler"/>
   </form>
 </section>
 </template>
 
 <script>
+import BackNextConfirmButtons from '@/common/BackNextConfirmButtons.vue';
 
 export default {
   name: 'ActCreationStepTwo',
+  components: {
+    BackNextConfirmButtons,
+  },
   props: {
     stepTwoInfo: {
       type: Object,
       required: true,
     }
+  },
+  computed: {
+    canNavigateToNextStep() {
+      return !!this.stepTwoInfo.income && !!this.stepTwoInfo.expenses;
+    },
+  },
+  methods: {
+    backButtonHandler() {
+      this.$emit('go-step-one');
+    },
+    nextButtonHandler() {
+      this.$emit('go-step-three');
+    },
   },
 };
 

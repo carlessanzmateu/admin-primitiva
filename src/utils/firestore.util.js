@@ -15,7 +15,7 @@ export default class FirestoreUtils {
 
   singleDocumentReferenceBuilder(collectionName, documentReference) {
     const db = this.getFirestore();
-    return db.collection(collectionName).doc(documentReference.docId);
+    return db.collection(collectionName).doc(documentReference);
   }
 
   multipleDocumentReferenceBuilder(collectionName, documentsReferences) {

@@ -4,7 +4,7 @@
     <h3>Descripción</h3>
     <p>{{ act.description }}</p>
     <h3>Fecha</h3>
-    <p>{{ act.date.seconds }}</p>
+    <p>{{ new Date(act.date) }}</p>
     <h3>Lugar</h3>
     <p>{{ act.location }}</p>
     <h3>Ropa</h3>

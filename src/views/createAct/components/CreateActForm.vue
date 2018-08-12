@@ -2,52 +2,49 @@
 <section class="create-act-form">
   <form novalidate class="md-layout" @submit="e => e.preventDefault()">
     <div
-      v-if="wizard.stepOneIsVisible"
+      v-show="wizard.stepOneIsVisible"
       class="step-one-wrapper">
       <ActCreationStepOne
-        :step-one-info="createActInfo"/>
+        :step-one-info="createActInfo"
+        @go-step-two="goStepTwo"/>
     </div>
     <div
-      v-if="wizard.stepTwoIsVisible"
+      v-show="wizard.stepTwoIsVisible"
       class="step-two-wrapper">
       <ActCreationStepTwo
-        :step-two-info="createActInfo"/>
+        :step-two-info="createActInfo"
+        @go-step-one="goStepOne"
+        @go-step-three="goStepThree"/>
     </div>
     <div
-      v-if="wizard.stepThreeIsVisible"
+      v-show="wizard.stepThreeIsVisible"
       class="step-three-wrapper">
       <ActCreationStepThree
         :act-types="actTypes"
         :clothes="clothes"
-        :step-three-info="createActInfo"/>
+        :step-three-info="createActInfo"
+        @go-step-two="goStepTwo"
+        @go-step-four="goStepFour"/>
     </div>
     <div
-      v-if="wizard.stepFourIsVisible"
+      v-show="wizard.stepFourIsVisible"
       class="step-four-wrapper">
       <ActCreationStepFour
         :musicians="musicians"
-        @expected-musicians-selection="expectedMusiciansHandler"/>
+        @expected-musicians-selection="expectedMusiciansHandler"
+        @go-step-three="goStepThree"
+        @go-step-five="goStepFive"/>
     </div>
     <div
-      v-if="wizard.stepFiveIsVisible" 
+      v-show="wizard.stepFiveIsVisible" 
       class="step-five-wrapper">
       <ActCreationStepFive
         :reinforcements="reinforcements"
-        @reinforcements-selection="reinforcementsHandler"/>
+        @reinforcements-selection="reinforcementsHandler"
+        @go-step-four="goStepFour"
+        @confirm-wizard="createActSubmit"/>
     </div>
   </form>
-  <BackNextConfirmButtons
-    back-text="Volver"
-    next-text="Continuar"
-    confirm-text="Crear acto"
-    :back-button-is-disabled="false"
-    :next-button-is-disabled="false"
-    :confirm-button-is-disabled="false"
-    :navigators-are-visible="true"
-    :confirm-is-visible="true"
-    @back-button="backButtonHandler"
-    @next-button="nextButtonHandler"
-    @confirm-button="confirmButtonHandler"/>
 </section>
 </template>
 
@@ -57,7 +54,6 @@ import ActCreationStepTwo from '@/views/createAct/components/ActCreationStepTwo.
 import ActCreationStepThree from '@/views/createAct/components/ActCreationStepThree.vue';
 import ActCreationStepFour from '@/views/createAct/components/ActCreationStepFour.vue';
 import ActCreationStepFive from '@/views/createAct/components/ActCreationStepFive.vue';
-import BackNextConfirmButtons from '@/common/BackNextConfirmButtons.vue';
 
 export default {
   name: 'CreateActForm',
@@ -67,7 +63,6 @@ export default {
     ActCreationStepThree,
     ActCreationStepFour,
     ActCreationStepFive,
-    BackNextConfirmButtons,
   },
   props: {
     actTypes: {
@@ -96,6 +91,7 @@ export default {
       income: undefined,
       expenses: undefined,
       actType: undefined,
+      clothes: undefined,
       expectedMusicians: undefined,
       reinforcements: undefined,
     },
@@ -107,44 +103,14 @@ export default {
       stepFiveIsVisible: false,
     }
   }),
-  computed: {
-    isDisabled() {
-      // return !(this.actName 
-      //   && this.actDescription 
-      //   && this.actLocation 
-      //   && this.actTypeId
-      //   && this.clothesElementId
-      //   && this.actDayDate);
-      return false;
-    },
-    expectedMusiciansWithMultipleInstruments() {
-      console.log(this.expectedMusicians);
-      return this.expectedMusicians.find((expectedMusician) => {
-        return expectedMusician.instruments.length > 1;
-      });
-    }
-  },
   methods: {
     async createActSubmit() {
-      console.log(this.createActInfo);
-      // const isValid = await this.$validator.validate();
-      // if (isValid) {
-      //   const actInfo = {
-      //     name: this.actName,
-      //     description: this.actDescription,
-      //     location: this.actLocation,
-      //     income: this.actIncome,
-      //     expenses: this.actExpenses,
-      //     actType: this.actTypes.find((actType) => actType.id === this.actTypeId),
-      //     clothes: this.clothes.find((clothesElement) => clothesElement.id === this.clothesElementId),
-      //     date: this.actDayDate,
-      //     expectedMusicians: this.expectedMusicians,
-      //     reinforcements: this.confirmedReinforcements,
-      //   };
-      //   this.$emit('create-act-submit', actInfo);
-      // } else {
-      //   console.log('not valid act');
-      // }
+      const isValid = await this.$validator.validate();
+      if (isValid) {
+        this.$emit('create-act-submit', this.createActInfo);
+      } else {
+        console.log('not valid act');
+      }
     },
     expectedMusiciansHandler(expectedMusicians) {
       this.createActInfo.expectedMusicians = expectedMusicians;
@@ -152,14 +118,32 @@ export default {
     reinforcementsHandler(reinforcements) {
       this.createActInfo.reinforcements = reinforcements;
     },
-    backButtonHandler() {
-      console.log('go back!');
+    resetFormStep() {
+      const keys = Object.keys(this.wizard);
+
+      keys.forEach((key) => {
+        this.wizard[key] = undefined;
+      });
     },
-    nextButtonHandler() {
-      console.log('go next!');
+    goStepOne() {
+      this.resetFormStep();
+      this.wizard.stepOneIsVisible = true;
     },
-    confirmButtonHandler() {
-      console.log('confirm!');      
+    goStepTwo() {
+      this.resetFormStep();
+      this.wizard.stepTwoIsVisible = true;
+    },
+    goStepThree() {
+      this.resetFormStep();
+      this.wizard.stepThreeIsVisible = true;
+    },
+    goStepFour() {
+      this.resetFormStep();
+      this.wizard.stepFourIsVisible = true;
+    },
+    goStepFive() {
+      this.resetFormStep();
+      this.wizard.stepFiveIsVisible = true;
     },
   },
 };

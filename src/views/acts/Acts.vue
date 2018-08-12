@@ -3,7 +3,7 @@
     <router-link :to="routerDestination(act.docId)" v-for="(act, key) in acts" :key="key">
       <ListCard
         :title="act.name"
-        :subtitle="new Date(act.date.seconds).toString()"
+        :subtitle="new Date(act.date).toString()"
         :description="act.description"/>
     </router-link>
     <router-link to="/create/act">

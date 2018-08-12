@@ -11,6 +11,7 @@ export default class ActsAssembler {
 
     acts.forEach((act) => {
       const assembledAct = new Act();
+
       assembledAct.docId = act.docId ? act.docId : undefined;
       assembledAct.name = act.name ? act.name : undefined;
       assembledAct.actType = act.actType ? act.actType : undefined;
@@ -20,11 +21,11 @@ export default class ActsAssembler {
       assembledAct.instrumentPerMusicians = act.instrumentPerMusicians ? act.instrumentPerMusicians : undefined;
       assembledAct.expenses = act.expenses ? act.expenses : undefined;
       assembledAct.income = act.income ? act.income : undefined;
-      assembledAct.date = act.date ? act.date : undefined;
+      assembledAct.date = act.date ? (act.date.seconds * 1000) : undefined;
       assembledAct.location = act.location ? act.location : undefined;
       assembledAct.reinforcements = act.reinforcements ? act.reinforcements : undefined;
       assembledAct.clothes = act.clothes ? act.clothes : undefined;
-
+      
       assembledActs.push(assembledAct);
     });
 
@@ -46,7 +47,7 @@ export default class ActsAssembler {
     assembledAct.instrumentPerMusicians = act.instrumentPerMusicians ? act.instrumentPerMusicians : undefined;
     assembledAct.expenses = act.expenses ? act.expenses : undefined;
     assembledAct.income = act.income ? act.income : undefined;
-    assembledAct.date = act.date ? act.date : undefined;
+    assembledAct.date = act.date ? (act.date.seconds * 1000) : undefined;
     assembledAct.location = act.location ? act.location : undefined;
     assembledAct.startHour = act.startHour ? act.startHour : undefined;
     assembledAct.finishHour = act.finishHour ? act.finishHour : undefined;
@@ -65,11 +66,11 @@ export default class ActsAssembler {
     const actRequest = new ActRequest();
 
     actRequest.name = act.name ? act.name : undefined;
-    actRequest.actType = act.actType ? firestoreUtils.singleDocumentReferenceBuilder('actos', act.actType) : undefined;
     actRequest.description = act.description ? act.description : '';
+    actRequest.actType = act.actType ? firestoreUtils.singleDocumentReferenceBuilder('actos', act.actType) : undefined;
     actRequest.expectedMusicians = act.expectedMusicians ? firestoreUtils.multipleDocumentReferenceBuilder('actos', act.expectedMusicians) : [];
-    actRequest.expenses = act.expenses ? act.expenses : undefined;
-    actRequest.income = act.income ? act.income : undefined;
+    actRequest.expenses = act.expenses ? act.expenses : 0;
+    actRequest.income = act.income ? act.income : 0;
     actRequest.date = act.date ? act.date : undefined;
     actRequest.location = act.location ? act.location : undefined;
     actRequest.reinforcements = act.reinforcements ? firestoreUtils.multipleDocumentReferenceBuilder('actos', act.reinforcements) : [];

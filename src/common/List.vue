@@ -68,10 +68,11 @@ export default {
       this.$emit('selection', this.selectedItems);
     },
     removeSelectedItem(indexSelection) {
-      this.availableItems.push(this.selectedItems[indexSelection]);
       if (!this.canDuplicate) {
-        this.selectedItems.splice(indexSelection, 1);
+        this.availableItems.push(this.selectedItems[indexSelection]);
       }
+      this.selectedItems.splice(indexSelection, 1);
+      
       this.$emit('selection', this.selectedItems);
     },
   },

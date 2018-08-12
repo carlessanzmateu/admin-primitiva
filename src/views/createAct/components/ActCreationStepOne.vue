@@ -22,17 +22,29 @@
       </md-field>
       <md-datepicker v-model="stepOneInfo.date" md-immediately />
     </div>
+    <BackNextConfirmButtons
+      back-text="Volver"
+      next-text="Continuar"
+      confirm-text="Crear acto"
+      :back-button-is-disabled="true"
+      :next-button-is-disabled="!canNavigateToNextStep"
+      :confirm-button-is-disabled="false"
+      :navigators-are-visible="true"
+      :confirm-is-visible="false"
+      @next-button="nextButtonHandler"/>
   </form>
 </section>
 </template>
 
 <script>
 import Button from '@/common/Button.vue';
+import BackNextConfirmButtons from '@/common/BackNextConfirmButtons.vue';
 
 export default {
   name: 'ActCreationStepOne',
   components: {
     Button,
+    BackNextConfirmButtons,
   },
   props: {
     stepOneInfo: {
@@ -40,26 +52,16 @@ export default {
       required: true,
     }
   },
-  // computed: {
-  //   isDisabled() {
-  //     return !(this.stepOneInfo.name && this.stepOneInfo.description && this.stepOneInfo.location);
-  //   },
-  // },
-  // methods: {
-  //   async createActSubmit() {
-  //     const isValid = await this.$validator.validate();
-  //     if (isValid) {
-  //       const actInfo = {
-  //         name: this.actName,
-  //         description: this.actDescription,
-  //         location: this.actLocation,
-  //       };
-  //       this.$emit('step-one', actInfo);
-  //     } else {
-  //       console.log('not valid step oen act creation');
-  //     }
-  //   },
-  // },
+  computed: {
+    canNavigateToNextStep() {
+      return !!this.stepOneInfo.name && !!this.stepOneInfo.description && !!this.stepOneInfo.location && !!this.stepOneInfo.date;
+    },
+  },
+  methods: {
+    nextButtonHandler() {
+      this.$emit('go-step-two');
+    },
+  },
 };
 </script>
 
