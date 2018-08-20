@@ -1,13 +1,13 @@
 <template>
   <div class="acts">
+    <router-link to="/create/act">
+      <Button buttonText="Añadir Acto"></Button>
+    </router-link>
     <router-link :to="routerDestination(act.docId)" v-for="(act, key) in acts" :key="key">
       <ListCard
         :title="act.name"
         :subtitle="new Date(act.date).toString()"
         :description="act.description"/>
-    </router-link>
-    <router-link to="/create/act">
-      <Button buttonText="Añadir Acto"></Button>
     </router-link>
   </div>
 </template>

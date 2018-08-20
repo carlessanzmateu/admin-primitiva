@@ -4,6 +4,7 @@ import Dashboard from './views/Dashboard.vue';
 import Acts from './views/acts/Acts.vue';
 import Act from './views/act/Act.vue';
 import CreateAct from './views/createAct/CreateAct.vue';
+import UpdateAct from './views/updateAct/UpdateAct.vue';
 import Login from './views/login/Login.vue';
 import About from './views/About.vue';
 import Musicians from './views/musicians/Musicians.vue';
@@ -46,6 +47,14 @@ export default new Router({
       path: '/create/act',
       name: 'createAct',
       component: CreateAct,
+      meta: {
+        auth: true,
+      },
+    },
+    {
+      path: '/edit/act/:id',
+      name: 'editAct',
+      component: UpdateAct,
       meta: {
         auth: true,
       },

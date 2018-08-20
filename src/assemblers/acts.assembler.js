@@ -36,9 +36,10 @@ export default class ActsAssembler {
     if (!act) {
       return new Act();
     } 
-
     const assembledAct = new Act();
+    
     assembledAct.id = act.id ? act.id : undefined;
+    assembledAct.docId = act.docId ? act.docId : undefined;
     assembledAct.name = act.name ? act.name : undefined;
     assembledAct.actType = act.actType ? act.actType : undefined;
     assembledAct.description = act.description ? act.description : undefined;

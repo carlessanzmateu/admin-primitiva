@@ -1,7 +1,9 @@
 <template>
   <section>
     <div class="edit-wrapper">
-      <Fab icon-name="create"/>
+      <router-link :to="navigateToEdit" v-if="act">
+        <Fab icon-name="create"/>
+      </router-link>
     </div>
     <div class="act" v-if="act">
       <h1>{{ act.name }}</h1>
@@ -51,7 +53,7 @@ import ActsService from '@/services/acts.service';
 import ActsAssembler from '@/assemblers/acts.assembler';
 
 export default {
-  name: 'acts',
+  name: 'act',
   components: {
     Fab,
   },
@@ -62,6 +64,9 @@ export default {
   computed: {
     netProfit() {
       return this.act.income - this.act.expenses;
+    },
+    navigateToEdit() {
+      return `/edit/act/${ this.act.docId }`;
     },
   },
   created() {

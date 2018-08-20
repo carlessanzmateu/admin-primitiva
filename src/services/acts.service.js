@@ -24,8 +24,11 @@ export default class ActsService {
       if (!actDoc.exists) {
         console.log(`${this.docId} does not exist`);
       }
-
-      return actDoc.data();
+      const docId = {
+        docId: actDoc.id,
+      };
+      
+      return Object.assign(docId, actDoc.data());
 
     } catch (error) {
       console.log(error);

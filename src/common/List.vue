@@ -40,6 +40,10 @@ export default {
       type: Array,
       required: true,
     },
+    preSelectedItems: {
+      type: Array,
+      default: [],
+    },
     propertyWithInfo: {
       type: String,
       required: true,
@@ -54,10 +58,11 @@ export default {
   },
   created() {
     this.availableItems = this.listOptions;
+    this.selectedItems = this.preSelectedItems ? this.preSelectedItems : [];
   },
   data: () => ({
     availableItems: undefined,
-    selectedItems: [],
+    selectedItems: undefined,
   }),
   methods: {
     selectAvailableItem(indexSelection) {
