@@ -30,7 +30,7 @@
       <h3>Beneficio:</h3>
       <md-field>
         <label for="actIncome">Beneficio</label>
-        <md-input 
+        <md-input
           v-validate="'required'"
           :required="true"
           name="actIncome"
@@ -40,7 +40,7 @@
       <h3>Gastos:</h3>
       <md-field>
         <label for="actExpenses">Gastos</label>
-        <md-input 
+        <md-input
           v-validate="'required'"
           :required="true"
           name="actExpenses"
@@ -109,6 +109,7 @@ export default {
     musiciansService: undefined,
     musiciansFromService: undefined,
     musicians: undefined,
+    preselectedMusicians: undefined,
   }),
   computed: {
     hasNecessaryInfo() {
@@ -131,7 +132,6 @@ export default {
     async getAct() {
       const actFromService = await this.actsService.getAct(this.$route.params.id);
       this.act = ActsAssembler.assembler(actFromService);
-      console.log(this.act);
     },
     async getActTypes() {
       this.actTypesFromService = await this.actTypesService.getAllActTypes();
@@ -144,12 +144,22 @@ export default {
     async getAllMusicians() {
       this.musiciansFromService = await this.musiciansService.getMusicians();
       this.musicians = MusiciansAssembler.assemblerList(this.musiciansFromService);
+      this.expectedMusiciansRecoverFromService();
     },
-    foo() {
-      const foo = this.musicians.find((musician) => {
-        musician.docId === this.act.expectedMusicians.id;
-      })
-      console.log(foo);
+    async expectedMusiciansRecoverFromService() {
+      const cacheArrayOfMusicians = [];
+      const resolvedExpectedMusicians = [];
+
+      this.act.expectedMusicians.forEach((musician) => {
+        cacheArrayOfMusicians.push(musician);
+      });
+
+      cacheArrayOfMusicians.forEach(async (musician) => {
+        const resolvedMusician = await this.musiciansService.getMusician(musician.id)
+        resolvedExpectedMusicians.push(resolvedMusician);
+      });
+
+      // console.log(MusiciansAssembler.assemblerList(resolvedExpectedMusicians));
     }
   },
 };
