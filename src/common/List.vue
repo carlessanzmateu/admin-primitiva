@@ -59,7 +59,6 @@ export default {
   created() {
     this.availableItems = this.listOptions;
     this.selectedItems = this.preSelectedItems ? this.preSelectedItems : [];
-    console.log(this.selectedItems);
   },
   data: () => ({
     availableItems: undefined,

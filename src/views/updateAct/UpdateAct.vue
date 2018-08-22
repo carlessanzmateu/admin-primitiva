@@ -70,7 +70,7 @@
       <h3>Músicos inscritos</h3>
       <List
         :list-options="musicians"
-        :pre-selected-items="act.expectedMusicians"
+        :pre-selected-items="preselectedMusicians"
         :can-duplicate="false"
         title="Músicos esperados"
         property-with-info="name"
@@ -144,7 +144,8 @@ export default {
     async getAllMusicians() {
       this.musiciansFromService = await this.musiciansService.getMusicians();
       this.musicians = MusiciansAssembler.assemblerList(this.musiciansFromService);
-      this.expectedMusiciansRecoverFromService();
+      await this.expectedMusiciansRecoverFromService();
+      this.arrayCleaner(this.musicians, this.preselectedMusicians);
     },
     async expectedMusiciansRecoverFromService() {
       const cacheArrayOfMusicians = [];
@@ -156,11 +157,26 @@ export default {
 
       cacheArrayOfMusicians.forEach(async (musician) => {
         const resolvedMusician = await this.musiciansService.getMusician(musician.id)
-        resolvedExpectedMusicians.push(resolvedMusician);
+        resolvedExpectedMusicians.push(MusiciansAssembler.assembler(resolvedMusician));
       });
 
-      // console.log(MusiciansAssembler.assemblerList(resolvedExpectedMusicians));
-    }
+      this.preselectedMusicians = resolvedExpectedMusicians;
+    },
+    arrayCleaner(elementsToPersist, elementsToremove) {
+      const elementsToPersitCache = [];
+      const elementsToRemoveCache = [];
+
+      elementsToPersist.forEach(element => {
+        elementsToPersitCache.push(element);
+      });
+
+      elementsToremove.forEach(element => {
+        elementsToRemoveCache.push(element);
+      });
+
+      console.log(elementsToPersitCache);
+      console.log(elementsToremove, elementsToRemoveCache);
+    },
   },
 };
 </script>

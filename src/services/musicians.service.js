@@ -38,12 +38,15 @@ export default class MusiciansService {
 
     try {
       const musicianDoc = await musicianRef.get();
-
       if (!musicianDoc.exists) {
         console.log(`${this.docId} does not exists`);
       }
+      const dataFromdoc = musicianDoc.data();
+      const newDocId = {
+        docId: musicianDoc.id,
+      };
 
-      return musicianDoc.data();
+      return Object.assign(newDocId, dataFromdoc);
 
     } catch (error) {
       console.log(error);
