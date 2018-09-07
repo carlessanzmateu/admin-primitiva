@@ -3,7 +3,7 @@
     <router-link to="/create/act">
       <Button buttonText="Añadir Acto"></Button>
     </router-link>
-    <router-link :to="routerDestination(act.docId)" v-for="(act, key) in acts" :key="key">
+    <router-link :to="routerDestination(act.docId)" v-for="(act, key) in getAllActs" :key="key">
       <ListCard
         :title="act.name"
         :subtitle="new Date(act.date).toString()"
@@ -13,9 +13,7 @@
 </template>
 
 <script>
-import ActsService from '@/services/acts.service';
-
-import ActsAssembler from '@/assemblers/acts.assembler';
+import { mapActions, mapGetters } from 'vuex';
 
 import ListCard from '@/common/ListCard.vue';
 import Button from '@/common/Button.vue';
@@ -26,23 +24,16 @@ export default {
     ListCard,
     Button,
   },
-  data: () => ({
-    actsService: undefined,
-    acts: undefined,
-  }),
-  created() {
-    this.actsService = new ActsService();
+  computed: {
+    ...mapGetters('acts', ['getAllActs']),
   },
   mounted() {
-    this.getActs();
+    this.fetchAllActs();
   },
   methods: {
+    ...mapActions('acts', ['fetchAllActs']),
     routerDestination(actId) {
       return `/act/${actId}`;
-    },
-    async getActs() {
-      const actsFromService = await this.actsService.getAllActs();
-      this.acts = ActsAssembler.assemblerList(actsFromService);
     },
   },
 };
