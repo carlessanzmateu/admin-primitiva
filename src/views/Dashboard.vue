@@ -15,9 +15,13 @@ export default {
   },
   mounted() {
     this.fetchMusicians();
+    this.fetchActTypes();
+    this.fetchAllClothes();
   },
   methods: {
     ...mapActions('musicians', ['fetchMusicians']),
+    ...mapActions('actTypes', ['fetchActTypes']),
+    ...mapActions('clothes', ['fetchAllClothes']),
   },
 };
 </script>
