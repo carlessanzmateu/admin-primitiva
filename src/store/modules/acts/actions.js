@@ -6,6 +6,13 @@ export async function fetchAllActs(context) {
   context.commit('setAllActs', allActs);
 }
 
+export async function fetchActDetail(context, docId) {
+  const actsService = new ActsService();
+  const act = await actsService.getAct(docId);
+  context.commit('setAct', act);
+}
+
 export const actions = {
   fetchAllActs,
+  fetchActDetail,
 };
