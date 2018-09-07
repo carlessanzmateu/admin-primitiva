@@ -17,11 +17,13 @@ export default {
     this.fetchMusicians();
     this.fetchActTypes();
     this.fetchAllClothes();
+    this.fetchAllInstruments();
   },
   methods: {
     ...mapActions('musicians', ['fetchMusicians']),
     ...mapActions('actTypes', ['fetchActTypes']),
     ...mapActions('clothes', ['fetchAllClothes']),
+    ...mapActions('instruments', ['fetchAllInstruments']),
   },
 };
 </script>

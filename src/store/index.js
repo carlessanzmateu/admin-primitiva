@@ -4,6 +4,7 @@ import auth from './modules/auth';
 import musicians from './modules/musicians/index';
 import actTypes from './modules/actTypes/index';
 import clothes from './modules/clothes/index';
+import instruments from './modules/instruments/index';
 
 Vue.use(Vuex);
 
@@ -13,5 +14,6 @@ export default new Vuex.Store({
     musicians,
     actTypes,
     clothes,
+    instruments,
   },
 });
