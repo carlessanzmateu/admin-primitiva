@@ -1,14 +1,11 @@
 <template>
   <div class="musicians">
-    <MusiciansList v-if="musicians" :musicians-list="musicians"/>
+    <MusiciansList v-if="getAllMusicians" :musicians-list="getAllMusicians"/>
   </div>
 </template>
 
 <script>
-import MusiciansService from '@/services/musicians.service';
-
-import MusiciansAssembler from '@/assemblers/musicians.assembler';
-
+import { mapGetters } from 'vuex';
 import MusiciansList from '@/views/musicians/components/MusiciansList.vue';
 
 export default {
@@ -17,21 +14,10 @@ export default {
     MusiciansList,
   },
   data: () => ({
-    musiciansService: undefined,
-    musiciansFromService: undefined,
     musicians: undefined,
   }),
-  created() {
-    this.musiciansService = new MusiciansService();
-  },
-  mounted() {
-    this.getMusicians();
-  },
-  methods: {
-    async getMusicians() {
-      this.musiciansFromService = await this.musiciansService.getMusicians();
-      this.musicians = MusiciansAssembler.assemblerList(this.musiciansFromService);
-    },
-  },
+  computed: {
+    ...mapGetters('musicians', ['getAllMusicians']),
+  }
 };
 </script>

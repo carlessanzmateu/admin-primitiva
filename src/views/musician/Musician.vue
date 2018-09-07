@@ -1,23 +1,23 @@
 <template>
-  <div class="musician" v-if="musicianFromService">
-    <h1 v-if="musicianFromService">{{ createMusicianName }}</h1>
+  <div class="musician" v-if="musicianDetail">
+    <h1 v-if="musicianDetail">{{ createMusicianName }}</h1>
     <MusicianAvatar
-      :urlToImage="musicianFromService.image"/>
+      :urlToImage="musicianDetail.image"/>
     <h3>Nombre</h3>
-    <p>{{ musicianFromService.name }}</p>
+    <p>{{ musicianDetail.name }}</p>
     <h3>Primer apellido</h3>
-    <p>{{ musicianFromService.firstSurname }}</p>
+    <p>{{ musicianDetail.firstSurname }}</p>
     <h3>Segundo apellido</h3>
-    <p>{{ musicianFromService.secondSurname }}</p>
+    <p>{{ musicianDetail.secondSurname }}</p>
     <h3>Instrumentos</h3>
-    <p v-for="(instrument, key) in musicianFromService.instruments" :key="key">
+    <p v-for="(instrument, key) in musicianDetail.instruments" :key="key">
       {{ instrument.id }}
     </p>
   </div>
 </template>
 
 <script>
-import MusiciansService from '@/services/musicians.service';
+import { mapActions, mapState } from 'vuex';
 import MusicianAvatar from '@/views/musician/components/MusicianAvatar.vue';
 
 export default {
@@ -26,27 +26,24 @@ export default {
     MusicianAvatar,
   },
   data: () => ({
-    musiciansService: undefined,
-    musicianFromService: undefined,
+    musician: undefined,
     routeInfo: undefined,
   }),
   computed: {
+    ...mapState('musicians', ['musicianDetail']),
     createMusicianName() {
-      if (!this.musicianFromService) {
+      if (!this.musicianDetail) {
         return '';
       }
-      return `${this.musicianFromService.name} ${this.musicianFromService.firstSurname} ${this.musicianFromService.secondSurname}`;
+      return `${this.musicianDetail.name} ${this.musicianDetail.firstSurname} ${this.musicianDetail.secondSurname}`;
     },
   },
   created() {
     this.routeInfo = this.$route.params.alias;
-    this.musiciansService = new MusiciansService();
-    this.getMusician();
+    this.fetchMusicianDetail(this.routeInfo);
   },
   methods: {
-    async getMusician() {
-      this.musicianFromService = await this.musiciansService.getMusician(this.routeInfo);
-    },
+    ...mapActions('musicians', ['fetchMusicianDetail']),
   },
 };
 </script>

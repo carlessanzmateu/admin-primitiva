@@ -12,6 +12,7 @@ export default class MusiciansService {
 
     this.db = firestore;
   }
+
   async getMusicians() {
     const musiciansRef = this.db.collection('musicos');
     const musicians = [];
