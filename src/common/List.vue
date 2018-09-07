@@ -42,7 +42,7 @@ export default {
     },
     preSelectedItems: {
       type: Array,
-      default: [],
+      default: () => [],
     },
     propertyWithInfo: {
       type: String,
@@ -77,7 +77,7 @@ export default {
         this.availableItems.push(this.selectedItems[indexSelection]);
       }
       this.selectedItems.splice(indexSelection, 1);
-      
+
       this.$emit('selection', this.selectedItems);
     },
   },

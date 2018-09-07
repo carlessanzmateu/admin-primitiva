@@ -48,7 +48,7 @@ export default {
     nextButtonHandler() {
       this.$emit('go-step-five');
     },
-  }
+  },
 };
 
 </script>

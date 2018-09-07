@@ -5,23 +5,22 @@
       v-if="hasNecessaryInfo"
       :act-types="actTypes"
       :clothes="clothes"
-      :musicians="musicians"
+      :musicians="getAllMusicians"
       :reinforcements="instruments"
       @create-act-submit="createActHandler"/>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import ActService from '@/services/acts.service';
 import ActTypeService from '@/services/actType.service';
 import ClothesService from '@/services/clothes.service';
-import MusiciansService from '@/services/musicians.service';
 import InstrumentsService from '@/services/instruments.service';
 
 import ActAssembler from '@/assemblers/acts.assembler';
 import ActTypeAssembler from '@/assemblers/actTypes.assembler';
 import ClothesAssembler from '@/assemblers/clothes.assembler';
-import MusiciansAssembler from '@/assemblers/musicians.assembler';
 import InstrumentsAssembler from '@/assemblers/instruments.assembler';
 
 import CreateActForm from '@/views/createAct/components/CreateActForm.vue';
@@ -38,30 +37,27 @@ export default {
     clothesService: undefined,
     clothesFromService: undefined,
     clothes: undefined,
-    musiciansService: undefined,
-    musiciansFromService: undefined,
-    musicians: undefined,
     instrumentsService: undefined,
     instrumentsFromService: undefined,
     instruments: undefined,
     actsService: undefined,
   }),
   computed: {
+    ...mapGetters('musicians', ['getAllMusicians']),
     hasNecessaryInfo() {
-      return !!this.actTypes && !!this.clothes && !!this.musicians && !!this.instruments;
+      console.log(this.getAllMusicians);
+      return !!this.actTypes && !!this.clothes && !!this.getAllMusicians && !!this.instruments;
     },
   },
   created() {
     this.actTypesService = new ActTypeService();
     this.clothesService = new ClothesService();
-    this.musiciansService = new MusiciansService();
     this.instrumentsService = new InstrumentsService();
     this.actsService = new ActService();
   },
   mounted() {
     this.getActTypes();
     this.getAllClothes();
-    this.getAllMusicians();
     this.getAllInstruments();
   },
   methods: {
@@ -72,10 +68,6 @@ export default {
     async getAllClothes() {
       this.clothesFromService = await this.clothesService.getAllClothes();
       this.clothes = ClothesAssembler.assemblerList(this.clothesFromService);
-    },
-    async getAllMusicians() {
-      this.musiciansFromService = await this.musiciansService.getMusicians();
-      this.musicians = MusiciansAssembler.assemblerList(this.musiciansFromService);
     },
     async getAllInstruments() {
       this.instrumentsFromService = await this.instrumentsService.getAllInstruments();
