@@ -9,12 +9,12 @@
           v-validate="'required'"
           :required="true"
           name="actName"
-          v-model="act.name"/>
+          v-model="getAct.name"/>
       </md-field>
       <h3>Descripción:</h3>
       <md-field>
         <label>Descripción</label>
-        <md-textarea v-model="act.description"></md-textarea>
+        <md-textarea v-model="getAct.description"></md-textarea>
       </md-field>
       <h3>Lugar:</h3>
       <md-field>
@@ -23,7 +23,7 @@
           v-validate="'required'"
           :required="true"
           name="actLocation"
-          v-model="act.location"/>
+          v-model="getAct.location"/>
       </md-field>
       <h3>Fecha</h3>
       <!-- <md-datepicker v-model="act.date" md-immediately /> -->
@@ -34,7 +34,7 @@
           v-validate="'required'"
           :required="true"
           name="actIncome"
-          v-model="act.income"
+          v-model="getAct.income"
           type="number"/>
       </md-field>
       <h3>Gastos:</h3>
@@ -44,15 +44,15 @@
           v-validate="'required'"
           :required="true"
           name="actExpenses"
-          v-model="act.expenses"
+          v-model="getAct.expenses"
           type="number"/>
       </md-field>
       <h3>Tipo de acto:</h3>
       <md-field>
         <label for="actTypeName">Tipo de acto</label>
-        <md-select v-model="act.actType" name="actTypeName" id="actTypeName">
+        <md-select v-model="getAct.actType" name="actTypeName" id="actTypeName">
           <md-option
-          v-for="(actType, key) in actTypes"
+          v-for="(actType, key) in getAllActTypes"
           :key="key"
           :value="actType.docId">{{ actType.name }}</md-option>
         </md-select>
@@ -60,17 +60,18 @@
       <h3>Ropa</h3>
       <md-field>
         <label for="actTypeName">Ropa</label>
-        <md-select v-model="act.clothes" name="clothes" id="clothesName">
+        <md-select v-model="getAct.clothes" name="clothes" id="clothesName">
           <md-option
-          v-for="(clothesElement, key) in clothes"
+          v-for="(clothesElement, key) in getAllClothes"
           :key="key"
           :value="clothesElement.docId">{{ clothesElement.alias }}</md-option>
         </md-select>
       </md-field>
       <h3>Músicos inscritos</h3>
       <List
-        :list-options="musicians"
-        :pre-selected-items="preselectedMusicians"
+        v-if="notExpectedMusicians"
+        :list-options="getNotExpectedMusicians.notExpected"
+        :pre-selected-items="getNotExpectedMusicians.expected"
         :can-duplicate="false"
         title="Músicos esperados"
         property-with-info="name"
@@ -80,15 +81,9 @@
 </template>
 
 <script>
-import ActsService from '@/services/acts.service';
-import ActTypeService from '@/services/actType.service';
-import ClothesService from '@/services/clothes.service';
-import MusiciansService from '@/services/musicians.service';
-
-import ActsAssembler from '@/assemblers/acts.assembler';
-import ActTypeAssembler from '@/assemblers/actTypes.assembler';
-import ClothesAssembler from '@/assemblers/clothes.assembler';
 import MusiciansAssembler from '@/assemblers/musicians.assembler';
+
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 import List from '@/common/List.vue';
 
@@ -98,85 +93,69 @@ export default {
     List,
   },
   data: () => ({
+    pollaMusicos: undefined,
     actsService: undefined,
     act: undefined,
-    actTypesService: undefined,
-    actTypesFromService: undefined,
-    actTypes: undefined,
-    clothesService: undefined,
-    clothesFromService: undefined,
-    clothes: undefined,
-    musiciansService: undefined,
-    musiciansFromService: undefined,
-    musicians: undefined,
-    preselectedMusicians: undefined,
+    notExpectedMusicians: undefined,
   }),
   computed: {
+    ...mapGetters('acts', ['getAct']),
+    ...mapGetters('musicians', ['getAllMusicians','getNotExpectedMusicians']),
+    ...mapGetters('actTypes', ['getAllActTypes']),
+    ...mapGetters('clothes', ['getAllClothes']),
+    ...mapGetters('instruments', ['getAllInstruments']),
     hasNecessaryInfo() {
-      return !!this.act && !!this.actTypes && !!this.clothes && !!this.musicians;
+      return !!this.getAllActTypes
+        && !!this.getAllClothes
+        && !!this.getAllMusicians
+        && !!this.getAllInstruments;
     },
-  },
-  created() {
-    this.actsService = new ActsService();
-    this.actTypesService = new ActTypeService();
-    this.clothesService = new ClothesService();
-    this.musiciansService = new MusiciansService();
   },
   mounted() {
-    this.getAct();
-    this.getActTypes();
-    this.getAllClothes();
-    this.getAllMusicians();
+    this.fetchActDetail(this.$route.params.id);
+    // this.parseExpectedMusicians();
+    this.setExpectedMusicians(this.getAct.expectedMusicians);
+    this.notExpectedMusicians = this.getNotExpectedMusicians;
   },
   methods: {
-    async getAct() {
-      const actFromService = await this.actsService.getAct(this.$route.params.id);
-      this.act = ActsAssembler.assembler(actFromService);
-    },
-    async getActTypes() {
-      this.actTypesFromService = await this.actTypesService.getAllActTypes();
-      this.actTypes = ActTypeAssembler.assemblerList(this.actTypesFromService);
-    },
-    async getAllClothes() {
-      this.clothesFromService = await this.clothesService.getAllClothes();
-      this.clothes = ClothesAssembler.assemblerList(this.clothesFromService);
-    },
-    async getAllMusicians() {
-      this.musiciansFromService = await this.musiciansService.getMusicians();
-      this.musicians = MusiciansAssembler.assemblerList(this.musiciansFromService);
-      await this.expectedMusiciansRecoverFromService();
-      this.arrayCleaner(this.musicians, this.preselectedMusicians);
-    },
-    async expectedMusiciansRecoverFromService() {
-      const cacheArrayOfMusicians = [];
-      const resolvedExpectedMusicians = [];
+    ...mapActions('acts', ['fetchActDetail']),
+    ...mapActions('musicians', ['parseMusician']),
+    ...mapMutations('musicians', ['setExpectedMusicians']),
+    // async parseExpectedMusicians() {
+    //   const expectedMusicians = this.getAct.expectedMusicians;
+    //   const parsedMusicians = [];
+    //   await expectedMusicians.forEach(async (element) => {
+    //     let parsedMusician = await this.parseMusician(element.id)
+    //     parsedMusicians.push(parsedMusician);
+    //   });
+    //   this.assistantMusiciansCleaner(parsedMusicians);
+    //   return '';
+    // },
+    // assistantMusiciansCleaner(parsedExpectedMusicians) {
+    //   console.log(this.getAct.expectedMusicians);
+    //   console.log(parsedExpectedMusicians);
+    //   console.log(this.getAllMusicians);
 
-      this.act.expectedMusicians.forEach((musician) => {
-        cacheArrayOfMusicians.push(musician);
-      });
+    //   console.log(MusiciansAssembler.assemblerList(parsedExpectedMusicians));
 
-      cacheArrayOfMusicians.forEach(async (musician) => {
-        const resolvedMusician = await this.musiciansService.getMusician(musician.id)
-        resolvedExpectedMusicians.push(MusiciansAssembler.assembler(resolvedMusician));
-      });
 
-      this.preselectedMusicians = resolvedExpectedMusicians;
-    },
-    arrayCleaner(elementsToPersist, elementsToremove) {
-      const elementsToPersitCache = [];
-      const elementsToRemoveCache = [];
+    //   let foo = this.getAllMusicians.some(v => parsedExpectedMusicians.indexOf(v) >= 0);
+    //   console.log(foo);
 
-      elementsToPersist.forEach(element => {
-        elementsToPersitCache.push(element);
-      });
+    //   // let polla = this.getAllMusicians;
 
-      elementsToremove.forEach(element => {
-        elementsToRemoveCache.push(element);
-      });
+    //   // const a = [];
+    //   // for(var j = 0; j < polla.length; j++) {
+    //   //   for(var i = 0; i < parsedExpectedMusicians.length; i++) {
+    //   //     if(polla[j].docId === parsedExpectedMusicians[i].docId) {
+    //   //       a.push(musician);
+    //   //       console.log(polla[j].docId === parsedExpectedMusicians[i].docId);
+    //   //     }
+    //   //   }
+    //   // }
 
-      console.log(elementsToPersitCache);
-      console.log(elementsToremove, elementsToRemoveCache);
-    },
+    //   // console.log(a);
+    // }
   },
 };
 </script>

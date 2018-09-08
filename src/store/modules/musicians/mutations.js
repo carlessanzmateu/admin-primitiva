@@ -6,6 +6,10 @@ const mutations = {
   setMusician(state, musician) {
     state.musicianDetail = musician;
   },
+
+  setExpectedMusicians(state, expectedMusicians) {
+    state.expectedMusicians = expectedMusicians;
+  }
 };
 
 export default mutations;
