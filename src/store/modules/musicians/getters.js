@@ -35,9 +35,10 @@ export function getNotExpectedMusicians(state) {
       }
     }
   }
-  
+
+  /* SE MONTA EL ASSEMBLER PARA QUE NO DE ERROR EN EL COMPONENTE LIST */
   return {
-    notExpected: musiciansFromState,
+    notExpected: MusiciansAssembler.assemblerList(musiciansFromState),
     expected: parsedExpectedMusicians
   };
 }

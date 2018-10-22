@@ -73,9 +73,16 @@
         :list-options="getNotExpectedMusicians.notExpected"
         :pre-selected-items="getNotExpectedMusicians.expected"
         :can-duplicate="false"
-        title="Músicos esperados"
         property-with-info="name"
-        @selection="true"/>
+        @selection="expectedMusiciansHandler"/>
+      <h3>Músicos asistentes</h3>
+      <!-- <List
+        v-if="notExpectedMusicians"
+        :list-options="getNotExpectedMusicians.notExpected"
+        :pre-selected-items="getNotExpectedMusicians.expected"
+        :can-duplicate="false"
+        property-with-info="name"
+        @selection="expectedMusiciansHandler"/> -->
     </div>
   </section>
 </template>
@@ -93,9 +100,7 @@ export default {
     List,
   },
   data: () => ({
-    pollaMusicos: undefined,
-    actsService: undefined,
-    act: undefined,
+    actReadyToUpdate: undefined,
     notExpectedMusicians: undefined,
   }),
   computed: {
@@ -113,7 +118,6 @@ export default {
   },
   mounted() {
     this.fetchActDetail(this.$route.params.id);
-    // this.parseExpectedMusicians();
     this.setExpectedMusicians(this.getAct.expectedMusicians);
     this.notExpectedMusicians = this.getNotExpectedMusicians;
   },
@@ -121,41 +125,9 @@ export default {
     ...mapActions('acts', ['fetchActDetail']),
     ...mapActions('musicians', ['parseMusician']),
     ...mapMutations('musicians', ['setExpectedMusicians']),
-    // async parseExpectedMusicians() {
-    //   const expectedMusicians = this.getAct.expectedMusicians;
-    //   const parsedMusicians = [];
-    //   await expectedMusicians.forEach(async (element) => {
-    //     let parsedMusician = await this.parseMusician(element.id)
-    //     parsedMusicians.push(parsedMusician);
-    //   });
-    //   this.assistantMusiciansCleaner(parsedMusicians);
-    //   return '';
-    // },
-    // assistantMusiciansCleaner(parsedExpectedMusicians) {
-    //   console.log(this.getAct.expectedMusicians);
-    //   console.log(parsedExpectedMusicians);
-    //   console.log(this.getAllMusicians);
-
-    //   console.log(MusiciansAssembler.assemblerList(parsedExpectedMusicians));
-
-
-    //   let foo = this.getAllMusicians.some(v => parsedExpectedMusicians.indexOf(v) >= 0);
-    //   console.log(foo);
-
-    //   // let polla = this.getAllMusicians;
-
-    //   // const a = [];
-    //   // for(var j = 0; j < polla.length; j++) {
-    //   //   for(var i = 0; i < parsedExpectedMusicians.length; i++) {
-    //   //     if(polla[j].docId === parsedExpectedMusicians[i].docId) {
-    //   //       a.push(musician);
-    //   //       console.log(polla[j].docId === parsedExpectedMusicians[i].docId);
-    //   //     }
-    //   //   }
-    //   // }
-
-    //   // console.log(a);
-    // }
+    expectedMusiciansHandler(expectedMusicians) {
+      console.log(this.getAct);
+    },
   },
 };
 </script>

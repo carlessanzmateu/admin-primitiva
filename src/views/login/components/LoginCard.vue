@@ -30,6 +30,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.login-card {
+  background-color: white;
+}
 .button-custom-styles {
   width: 100%;
 }

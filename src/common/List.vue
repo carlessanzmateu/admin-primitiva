@@ -50,6 +50,7 @@ export default {
     },
     title: {
       type: String,
+      required: false,
     },
     canDuplicate: {
       type: Boolean,

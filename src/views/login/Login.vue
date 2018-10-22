@@ -40,6 +40,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-image: linear-gradient(white 50%, #3399ff);
+}
 .button-custom-styles {
   width: 50%;
   margin-top: 15px;
