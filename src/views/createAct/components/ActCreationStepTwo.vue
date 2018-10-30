@@ -3,7 +3,7 @@
   <form novalidate class="md-layout" @submit="e => e.preventDefault()">
       <md-field>
         <label for="actIncome">Beneficio</label>
-        <md-input 
+        <md-input
           v-validate="'required'"
           :required="true"
           name="actIncome"
@@ -12,7 +12,7 @@
       </md-field>
       <md-field>
         <label for="actExpenses">Gastos</label>
-        <md-input 
+        <md-input
           v-validate="'required'"
           :required="true"
           name="actExpenses"
@@ -46,7 +46,7 @@ export default {
     stepTwoInfo: {
       type: Object,
       required: true,
-    }
+    },
   },
   computed: {
     canNavigateToNextStep() {

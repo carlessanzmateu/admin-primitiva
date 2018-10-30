@@ -33,7 +33,7 @@ export default class MusiciansAssembler {
 
       assembledMusicians.push(assembledMusician);
     });
-    
+
     return assembledMusicians;
   }
 }

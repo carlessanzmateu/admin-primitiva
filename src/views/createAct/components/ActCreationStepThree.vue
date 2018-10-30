@@ -54,7 +54,7 @@ export default {
     stepThreeInfo: {
       type: Object,
       required: true,
-    }
+    },
   },
   computed: {
     canNavigateToNextStep() {

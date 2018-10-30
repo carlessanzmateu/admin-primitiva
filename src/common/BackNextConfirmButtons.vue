@@ -3,13 +3,22 @@
     <div
       v-if="navigatorsAreVisible"
       class="navigators">
-      <Button :buttonText="backText" @button-clicked="backClickHandler" :disabled="backButtonIsDisabled"></Button>
-      <Button :buttonText="nextText" @button-clicked="nextClickHandler" :disabled="nextButtonIsDisabled"></Button>
+      <Button
+        :buttonText="backText"
+        @button-clicked="backClickHandler"
+        :disabled="backButtonIsDisabled"></Button>
+      <Button
+        :buttonText="nextText"
+        @button-clicked="nextClickHandler"
+        :disabled="nextButtonIsDisabled"></Button>
     </div>
     <div
       v-if="confirmIsVisible"
       class="confirm">
-      <Button :buttonText="confirmText" @button-clicked="confirmHandler" :disabled="confirmButtonIsDisabled"></Button>
+      <Button
+        :buttonText="confirmText"
+        @button-clicked="confirmHandler"
+        :disabled="confirmButtonIsDisabled"></Button>
     </div>
   </section>
 </template>
@@ -29,11 +38,11 @@ export default {
     },
     nextText: {
       type: String,
-      default: 'Continuar'
+      default: 'Continuar',
     },
     confirmText: {
       type: String,
-      default: 'Confirmar'
+      default: 'Confirmar',
     },
     backButtonIsDisabled: {
       type: Boolean,
@@ -66,7 +75,7 @@ export default {
     confirmHandler() {
       this.$emit('confirm-button');
     },
-  }
+  },
 };
 
 </script>

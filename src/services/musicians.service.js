@@ -48,7 +48,6 @@ export default class MusiciansService {
       };
 
       return Object.assign(newDocId, dataFromdoc);
-
     } catch (error) {
       console.log(error);
     }

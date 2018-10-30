@@ -18,6 +18,6 @@ export default {
   }),
   computed: {
     ...mapGetters('musicians', ['getAllMusicians']),
-  }
+  },
 };
 </script>

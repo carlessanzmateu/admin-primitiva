@@ -75,6 +75,20 @@
         :can-duplicate="false"
         property-with-info="name"
         @selection="expectedMusiciansHandler"/>
+
+      <div
+        v-if="musiciansWithMultipleInstruments"
+        v-for="(musician, key) in musiciansWithMultipleInstruments"
+        :key="key">
+        <h3>Instrumentos duplicados de {{ musician.name }}</h3>
+        <List
+        :list-options="musician.instruments"
+        :can-duplicate="false"
+        :isOneSelection="true"
+        property-with-info="id"
+        @selection="expectedMusiciansHandler"/>
+      </div>
+
       <h3>Músicos asistentes</h3>
       <!-- <List
         v-if="notExpectedMusicians"
@@ -102,6 +116,7 @@ export default {
   data: () => ({
     actReadyToUpdate: undefined,
     notExpectedMusicians: undefined,
+    musiciansWithMultipleInstruments: undefined,
   }),
   computed: {
     ...mapGetters('acts', ['getAct']),
@@ -126,7 +141,7 @@ export default {
     ...mapActions('musicians', ['parseMusician']),
     ...mapMutations('musicians', ['setExpectedMusicians']),
     expectedMusiciansHandler(expectedMusicians) {
-      console.log(this.getAct);
+      this.musiciansWithMultipleInstruments = expectedMusicians.filter(musician => musician.instruments.length > 1);
     },
   },
 };

@@ -50,11 +50,14 @@ export default {
     stepOneInfo: {
       type: Object,
       required: true,
-    }
+    },
   },
   computed: {
     canNavigateToNextStep() {
-      return !!this.stepOneInfo.name && !!this.stepOneInfo.description && !!this.stepOneInfo.location && !!this.stepOneInfo.date;
+      return !!this.stepOneInfo.name &&
+        !!this.stepOneInfo.description &&
+        !!this.stepOneInfo.location &&
+        !!this.stepOneInfo.date;
     },
   },
   methods: {

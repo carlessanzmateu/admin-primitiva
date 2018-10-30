@@ -36,7 +36,7 @@
         @go-step-five="goStepFive"/>
     </div>
     <div
-      v-show="wizard.stepFiveIsVisible" 
+      v-show="wizard.stepFiveIsVisible"
       class="step-five-wrapper">
       <ActCreationStepFive
         :reinforcements="reinforcements"
@@ -83,7 +83,7 @@ export default {
     },
   },
   data: () => ({
-    createActInfo : {
+    createActInfo: {
       name: undefined,
       description: undefined,
       location: undefined,
@@ -101,7 +101,7 @@ export default {
       stepThreeIsVisible: false,
       stepFourIsVisible: false,
       stepFiveIsVisible: false,
-    }
+    },
   }),
   methods: {
     async createActSubmit() {

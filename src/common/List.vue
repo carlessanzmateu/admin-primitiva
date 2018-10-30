@@ -56,6 +56,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    isOneSelection: {
+      type: Boolean,
+      default: false,
+    },
   },
   created() {
     this.availableItems = this.listOptions;

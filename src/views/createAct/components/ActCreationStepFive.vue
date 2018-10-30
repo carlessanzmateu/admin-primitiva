@@ -49,7 +49,7 @@ export default {
     confirmButtonHandler() {
       this.$emit('confirm-wizard');
     },
-  }
+  },
 };
 
 </script>
