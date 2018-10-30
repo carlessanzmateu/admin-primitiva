@@ -21,7 +21,7 @@
         v-for="(selectedMusician, index) in selectedMusicians"
         :key="index"
         class="selected-musician"
-        @click="removeSelectedItem(selectedMusician, index)">
+        @click="removeSelectedMusician(selectedMusician, index)">
           {{ musicianNamePrettify(selectedMusician) }}
           <span
             class="remove-button">
@@ -47,7 +47,6 @@ export default {
     },
   },
   created() {
-    console.log(this.availableMusiciansList);
     this.notSelectedMusicians = this.availableMusiciansList;
     this.selectedMusicians = this.preSelectedMusicians ? this.preSelectedMusicians : [];
   },
@@ -65,7 +64,7 @@ export default {
 
       this.$emit('selection', this.selectedMusicians);
     },
-    removeSelectedItem(musician, indexSelection) {
+    removeSelectedMusician(musician, indexSelection) {
       this.notSelectedMusicians.push(musician);
       this.selectedMusicians.splice(indexSelection, 1);
 

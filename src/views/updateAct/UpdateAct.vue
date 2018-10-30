@@ -87,6 +87,12 @@
         :isOneSelection="true"
         property-with-info="id"
         @selection="selectedInstrumentPerMusician"/>
+
+
+        <h1>Este!</h1>
+        <MultipleInstrumentsList
+          :available-instruments-list="musician.instruments"
+          :musician="musician"/>
       </div>
 
       <h3>Músicos asistentes</h3>
@@ -108,12 +114,14 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 import List from '@/common/List.vue';
 import MusiciansList from '@/common/MusiciansList.vue';
+import MultipleInstrumentsList from '@/common/MultipleInstrumentsList.vue';
 
 export default {
   name: 'updateAct',
   components: {
     List,
     MusiciansList,
+    MultipleInstrumentsList,
   },
   data: () => ({
     actReadyToUpdate: undefined,
