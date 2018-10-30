@@ -57,6 +57,7 @@
           :value="actType.docId">{{ actType.name }}</md-option>
         </md-select>
       </md-field>
+
       <h3>Ropa</h3>
       <md-field>
         <label for="actTypeName">Ropa</label>
@@ -67,13 +68,12 @@
           :value="clothesElement.docId">{{ clothesElement.alias }}</md-option>
         </md-select>
       </md-field>
+
       <h3>Músicos inscritos</h3>
-      <List
+      <MusiciansList
         v-if="notExpectedMusicians"
-        :list-options="getNotExpectedMusicians.notExpected"
-        :pre-selected-items="getNotExpectedMusicians.expected"
-        :can-duplicate="false"
-        property-with-info="name"
+        :available-musicians-list="getNotExpectedMusicians.notExpected"
+        :pre-selected-musicians="getNotExpectedMusicians.expected"
         @selection="expectedMusiciansHandler"/>
 
       <div
@@ -86,7 +86,7 @@
         :can-duplicate="false"
         :isOneSelection="true"
         property-with-info="id"
-        @selection="expectedMusiciansHandler"/>
+        @selection="selectedInstrumentPerMusician"/>
       </div>
 
       <h3>Músicos asistentes</h3>
@@ -107,11 +107,13 @@ import MusiciansAssembler from '@/assemblers/musicians.assembler';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 import List from '@/common/List.vue';
+import MusiciansList from '@/common/MusiciansList.vue';
 
 export default {
   name: 'updateAct',
   components: {
     List,
+    MusiciansList,
   },
   data: () => ({
     actReadyToUpdate: undefined,
@@ -143,6 +145,9 @@ export default {
     expectedMusiciansHandler(expectedMusicians) {
       this.musiciansWithMultipleInstruments = expectedMusicians.filter(musician => musician.instruments.length > 1);
     },
+    selectedInstrumentPerMusician(foo, bar) {
+      console.log(foo)
+    }
   },
 };
 </script>
