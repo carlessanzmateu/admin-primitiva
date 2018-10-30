@@ -71,7 +71,7 @@
 
       <h3>Músicos inscritos</h3>
       <MusiciansList
-        v-if="notExpectedMusicians"
+        v-if="getNotExpectedMusicians"
         :available-musicians-list="getNotExpectedMusicians.notExpected"
         :pre-selected-musicians="getNotExpectedMusicians.expected"
         @selection="expectedMusiciansHandler"/>
@@ -80,19 +80,10 @@
         v-if="musiciansWithMultipleInstruments"
         v-for="(musician, key) in musiciansWithMultipleInstruments"
         :key="key">
-        <h3>Instrumentos duplicados de {{ musician.name }}</h3>
-        <List
-        :list-options="musician.instruments"
-        :can-duplicate="false"
-        :isOneSelection="true"
-        property-with-info="id"
-        @selection="selectedInstrumentPerMusician"/>
-
-
-        <h1>Este!</h1>
         <MultipleInstrumentsList
           :available-instruments-list="musician.instruments"
-          :musician="musician"/>
+          :musician="musician"
+          @selection="selectedInstrumentPerMusician"/>
       </div>
 
       <h3>Músicos asistentes</h3>
@@ -125,7 +116,8 @@ export default {
   },
   data: () => ({
     actReadyToUpdate: undefined,
-    notExpectedMusicians: undefined,
+    notExpectedMusicians: [],
+    expectedMusicians: [],
     musiciansWithMultipleInstruments: undefined,
   }),
   computed: {
@@ -144,7 +136,6 @@ export default {
   mounted() {
     this.fetchActDetail(this.$route.params.id);
     this.setExpectedMusicians(this.getAct.expectedMusicians);
-    this.notExpectedMusicians = this.getNotExpectedMusicians;
   },
   methods: {
     ...mapActions('acts', ['fetchActDetail']),
@@ -153,7 +144,7 @@ export default {
     expectedMusiciansHandler(expectedMusicians) {
       this.musiciansWithMultipleInstruments = expectedMusicians.filter(musician => musician.instruments.length > 1);
     },
-    selectedInstrumentPerMusician(foo, bar) {
+    selectedInstrumentPerMusician(foo) {
       console.log(foo)
     }
   },
