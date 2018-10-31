@@ -55,7 +55,7 @@ export default {
     },
   },
   data: () => ({
-    notSelectedinstruments: undefined,
+    notSelectedinstruments: [],
     selectedInstrument: [],
   }),
   methods: {
@@ -63,20 +63,19 @@ export default {
       return `${this.musician.name} ${this.musician.firstSurname} ${this.musician.secondSurname}`;
     },
     selectAvailableInstrument(instrument, indexSelection) {
-      // if (!this.canAdd) {
-      //   return;
-      // }
+      if (!this.canAdd) {
+        return;
+      }
+      this.selectedInstrument.push(instrument);
+      this.notSelectedinstruments.splice(indexSelection, 1);
 
-      // this.selectedInstrument.push(instrument);
-      // this.notSelectedinstruments.splice(indexSelection, 1);
-
-      // this.$emit('selection', this.selectedInstrument);
+      this.$emit('selection', this.selectedInstrument);
     },
     removeSelectedInstrument(instrument, indexSelection) {
-      // this.notSelectedinstruments.push(instrument);
-      // this.selectedInstrument.splice(indexSelection, 1);
+      this.notSelectedinstruments.push(instrument);
+      this.selectedInstrument.splice(indexSelection, 1);
 
-      // this.$emit('selection', this.selectedInstrument);
+      this.$emit('selection', this.selectedInstrument);
     },
   },
 };
