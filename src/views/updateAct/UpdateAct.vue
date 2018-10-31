@@ -141,12 +141,12 @@ export default {
     ...mapActions('acts', ['fetchActDetail']),
     ...mapActions('musicians', ['parseMusician']),
     ...mapMutations('musicians', ['setExpectedMusicians']),
-    expectedMusiciansHandler(expectedMusicians) {
-      this.musiciansWithMultipleInstruments = expectedMusicians.filter(musician => musician.instruments.length > 1);
+    expectedMusiciansHandler(musicians) {
+      this.musiciansWithMultipleInstruments = musicians.filter(musician => musician.instruments.length > 1);
     },
     selectedInstrumentPerMusician(foo) {
       console.log(foo)
-    }
+    },
   },
 };
 </script>
