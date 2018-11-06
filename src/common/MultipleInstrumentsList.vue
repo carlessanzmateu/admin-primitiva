@@ -69,13 +69,19 @@ export default {
       this.selectedInstrument.push(instrument);
       this.notSelectedinstruments.splice(indexSelection, 1);
 
-      this.$emit('selection', this.selectedInstrument);
+      this.$emit('selection', {
+        musician: this.musician,
+        instrument: this.selectedInstrument
+      });
     },
     removeSelectedInstrument(instrument, indexSelection) {
       this.notSelectedinstruments.push(instrument);
       this.selectedInstrument.splice(indexSelection, 1);
 
-      this.$emit('selection', this.selectedInstrument);
+      this.$emit('selection', {
+        musician: this.musician,
+        instrument: undefined
+      });
     },
   },
 };
